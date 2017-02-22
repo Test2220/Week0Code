@@ -5,39 +5,50 @@ import org.usfirst.frc.team2220.robot.RobotMap;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class IncrementMotionMode extends Command {
+public class TeleMotion extends Command {
 
-	public boolean done = false;
-	double incPos;
-    public IncrementMotionMode(double val) {
-    	incPos = val;
+	double rVal, lVal;
+    public TeleMotion(double r, double l) {
         requires(RobotMap.drive);
+        rVal = r;
+        lVal = l;
     }
 
     // Called just before this Command runs the first time
-    protected void initialize() {
+    protected void initialize() 
+    {
     	RobotMap.rDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
     	RobotMap.lDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
+    	
+    	RobotMap.drive.resetEncoderPos();
+    	
+    	RobotMap.drive.incrementRPosition(rVal);
+    	RobotMap.drive.incrementLPosition(lVal);
     	
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	RobotMap.drive.incrementAllPos(incPos);
-    	done = true;
+    protected void execute() 
+    {
+    	SmartDashboard.putBoolean("isRunningTeleMotion", true);
     }
 
     // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return done;
+    protected boolean isFinished() 
+    {
+    	boolean isRDriveFinished = ( Math.abs(RobotMap.rDriveMaster.getClosedLoopError()) < RobotMap.CLOSEDLOOPERROR );
+    	boolean isLDriveFinished = ( Math.abs(RobotMap.rDriveMaster.getClosedLoopError()) < RobotMap.CLOSEDLOOPERROR );
+        return isRDriveFinished && isLDriveFinished;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	new DriveOff();
     }
 
     // Called when another command which requires one or more of the same

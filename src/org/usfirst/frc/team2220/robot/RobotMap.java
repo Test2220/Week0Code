@@ -28,18 +28,21 @@ public class RobotMap {
 	
 	public static DoubleSolenoid driveShifter;
 	public static DoubleSolenoid collectorShifter;
+	public static DoubleSolenoid clawzPiston;
 	
 	public static PowerDistributionPanel panel;
 	
 	public static TankDrive drive;
 	public static FlameThrower flamethrower;
 	public static Washer washerSubsystem;
+	public static Intake intake;
+	public static CLAWZ clawz;
 	
 	public static boolean isInHighGear;
 	
 	public static Compressor compressor;
 	
-	public static Intake intake;
+	
 	
 	public static double deadzone(double val, double zone)
 	{
@@ -47,6 +50,8 @@ public class RobotMap {
 			return 0;
 		return val;
 	}
+	
+	public final static int CLOSEDLOOPERROR = 15; //a little less than half an inch or +- 2 degrees
 	
 	public static void init()
 	{
@@ -70,11 +75,15 @@ public class RobotMap {
 		
 		washerSubsystem = new Washer();
 		
+		clawz = new CLAWZ();
+		
 		compressor = new Compressor();
 		
 		
-		driveShifter = new DoubleSolenoid(0, 4);
-		collectorShifter = new DoubleSolenoid(1, 5);
+		driveShifter = new DoubleSolenoid(0, 3);
+		collectorShifter = new DoubleSolenoid(6, 7);
+		clawzPiston = new DoubleSolenoid(1, 2);
+		//6 and 7?
 		
 		drive = new TankDrive();
 		flamethrower = new FlameThrower();
@@ -93,10 +102,30 @@ public class RobotMap {
 		collectorSlave.changeControlMode(TalonControlMode.Follower);
 		collectorSlave.set(collectorMaster.getDeviceID());
 		
+		/*
+		 * Encoders = 							 128 ticks per rev
+		 * Talon Native Units (allowableError) = 512 per rev
+		 * Encoder Output 12:36 = 3x speed
+		 * Encoder = 384 actual tick per wheel rotation
+		 * Talon Native Unites = 1536 per wheel rotation
+		 * 8inch wheel
+		 * ~25 inch cir
+		 * 25:1536
+		 * 
+		 * if Closed loopError = 61.44 our range = +- 0.5 inches
+		 * 
+		 * 
+		 * 4Talon native units ~= 1 degree
+		 * 
+		 */
+		
+		
+		
 		
 		rDriveMaster.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		rDriveMaster.configEncoderCodesPerRev(128);
-		rDriveMaster.setAllowableClosedLoopErr(5);
+		rDriveMaster.reverseSensor(true);
+		rDriveMaster.configEncoderCodesPerRev(128); //4x128=512
+		rDriveMaster.setAllowableClosedLoopErr(CLOSEDLOOPERROR);
 		
 		rDriveMaster.setEncPosition(0);
 
@@ -105,9 +134,12 @@ public class RobotMap {
 		rDriveMaster.setMotionMagicAcceleration(1000);   //RPM/S
 		rDriveMaster.setMotionMagicCruiseVelocity(500); //RPM
 		
+		
+		
 		lDriveMaster.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		lDriveMaster.reverseSensor(true);
 		lDriveMaster.configEncoderCodesPerRev(128);
-		lDriveMaster.setAllowableClosedLoopErr(5);
+		lDriveMaster.setAllowableClosedLoopErr(CLOSEDLOOPERROR);
 		
 		lDriveMaster.setEncPosition(0);
 

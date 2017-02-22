@@ -1,6 +1,8 @@
 
 package org.usfirst.frc.team2220.robot;
 
+import org.usfirst.frc.team2220.robot.subsystems.TankDrive;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -89,7 +91,19 @@ public class Robot extends IterativeRobot {
 	public void updateSmartDashboard()
 	{
 		//SmartDashboard.putNumber("scale", RobotMap.drive.getScale());
-		SmartDashboard.putBoolean("compressorOn", RobotMap.compressor.enabled());
+		//SmartDashboard.putBoolean("compressorOn", RobotMap.compressor.enabled());
+		SmartDashboard.putNumber("rSetpoint", RobotMap.drive.rDriveMotorSetpoint);
+		SmartDashboard.putNumber("rActual", RobotMap.rDriveMaster.getPosition());
+		SmartDashboard.putNumber("rPower", RobotMap.rDriveMaster.getOutputVoltage());
+		SmartDashboard.putNumber("rError", RobotMap.rDriveMaster.getClosedLoopError());
+		SmartDashboard.putNumber("rEnc", RobotMap.rDriveMaster.getEncPosition());
+		
+		SmartDashboard.putNumber("lSetpoint", RobotMap.drive.lDriveMotorSetpoint);
+		SmartDashboard.putNumber("lActual", RobotMap.lDriveMaster.getPosition());
+		SmartDashboard.putNumber("lPower", RobotMap.lDriveMaster.getOutputVoltage());
+		SmartDashboard.putNumber("lError", RobotMap.lDriveMaster.getClosedLoopError());
+		SmartDashboard.putNumber("lEnc", RobotMap.lDriveMaster.getEncPosition());
+		//SmartDashboard.putBoolean("aButton", OI.aButton.get());
 	}
 
 	/**

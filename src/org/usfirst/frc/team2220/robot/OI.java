@@ -1,9 +1,9 @@
 package org.usfirst.frc.team2220.robot;
 
 import org.usfirst.frc.team2220.robot.commands.*;
+import org.usfirst.frc.team2220.robot.triggers.DriveTrigger;
 import org.usfirst.frc.team2220.robot.triggers.XboxTrigger;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -23,13 +23,18 @@ public class OI {
 	
 	
 	/**
-	 * DRIVER BUTTONS
+	 * DRIVER TRIGGERS
 	 */
 	private static Button aButtonD = new JoystickButton(driverStick, 1);
+	private static Button bButtonD = new JoystickButton(driverStick, 2);
+	private static Button xButtonD = new JoystickButton(driverStick, 3);
+	private static Button yButtonD = new JoystickButton(driverStick, 4);
+	
+	private static DriveTrigger isDriving = new DriveTrigger();
 	
 	
 	/**
-	 * MANIPULATOR BUTTONS
+	 * MANIPULATOR TRIGGERS
 	 */
 	private static Button aButtonM = new JoystickButton(manipulatorStick, 1);
 	private static Button bButtonM = new JoystickButton(manipulatorStick, 2);
@@ -47,6 +52,12 @@ public class OI {
 		
 		//Driver
 		aButtonD.whenPressed(new Shift());
+		//bButtonD.whenPressed(new TeleMotion(30, 30));
+		bButtonD.whenPressed(new OpenCLAWZ());
+		yButtonD.whenPressed(new CloseCLAWZ());
+		
+		isDriving.whileActive(new DriveWithControllers());
+		isDriving.whenInactive(new DriveOff());
 		
 		//Manipulator
 		lTriggerM.whileActive(new RunIntake(1.0));

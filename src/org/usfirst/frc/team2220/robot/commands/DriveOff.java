@@ -5,6 +5,7 @@ import org.usfirst.frc.team2220.robot.RobotMap;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveOff extends Command {
 
@@ -24,6 +25,7 @@ public class DriveOff extends Command {
     protected void execute() 
     {
     	RobotMap.drive.stopMotors();
+    	SmartDashboard.putBoolean("isRunningTeleMotion", false);
     }
 
     // Make this return true when this Command no longer needs to run execute()

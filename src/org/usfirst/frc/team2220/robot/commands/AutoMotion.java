@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2220.robot.commands;
 
-import org.usfirst.frc.team2220.robot.OI;
 import org.usfirst.frc.team2220.robot.RobotMap;
 
 import com.ctre.CANTalon.TalonControlMode;
@@ -10,32 +9,36 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveWithControllers extends Command {
+public class AutoMotion extends Command {
 
-    public DriveWithControllers() {
+	double rVal, lVal;
+    public AutoMotion(double r, double l) {
         requires(RobotMap.drive);
+        rVal = r;
+        lVal = l;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() 
     {
-    	RobotMap.rDriveMaster.changeControlMode(TalonControlMode.PercentVbus);
-    	RobotMap.lDriveMaster.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.rDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
+    	RobotMap.lDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
+    	RobotMap.drive.incrementRPosition(rVal);
+    	RobotMap.drive.incrementLPosition(lVal);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	double scale = 1.0;
-		double rVal = OI.driverStick.getRawAxis(OI.rAxis) * scale * -1;
-    	double lVal = OI.driverStick.getRawAxis(OI.lAxis) * scale;
-    	RobotMap.drive.controllerTank(rVal, lVal); //method on instantiation of TankDrive subclass of subsystem
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
+    protected boolean isFinished() 
+    {
+    	boolean isRDriveFinished = ( Math.abs(RobotMap.rDriveMaster.getClosedLoopError()) < RobotMap.CLOSEDLOOPERROR );
+    	boolean isLDriveFinished = ( Math.abs(RobotMap.rDriveMaster.getClosedLoopError()) < RobotMap.CLOSEDLOOPERROR );
+        return isRDriveFinished && isLDriveFinished;
     }
 
     // Called once after isFinished returns true
@@ -46,6 +49,5 @@ public class DriveWithControllers extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	new DriveOff();
     }
 }

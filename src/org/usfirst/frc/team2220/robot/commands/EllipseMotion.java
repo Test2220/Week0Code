@@ -4,23 +4,33 @@ import org.usfirst.frc.team2220.robot.RobotMap;
 
 import com.ctre.CANTalon.TalonControlMode;
 
-//import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class TeleMotion extends Command {
+public class EllipseMotion extends Command {
 
-	double rVal, lVal;
-	//input is encoder revolutions, along with velocity in RPM and accel in RPM/s
-    public TeleMotion(double r, double l, double accel, double cVel) {
+	public static final double WHEEL_SPACING = 2.25; //feet
+	double rDist, lDist;
+	
+	//theta in degrees, radii in feet, time in seconds
+    public EllipseMotion(double rVal, double lVal, double accelTime, double totalTime) 
+    {
         requires(RobotMap.drive);
-        rVal = r;
-        lVal = l;
-        RobotMap.drive.setBothAccel(accel);
-        RobotMap.drive.setBothCruiseVel(cVel);
+        
+        rDist = rVal;
+        lDist = lVal;
+        
+        double rCruiseVel = ( (rDist / (totalTime - accelTime)) / 2 ) * 60;
+        double lCruiseVel = ( (rDist / (totalTime - accelTime)) / 2 ) * 60;
+        double rAccel = rCruiseVel / accelTime;
+        double lAccel = lCruiseVel / accelTime;
+        
+        RobotMap.drive.setRCruiseVel(rCruiseVel);
+        RobotMap.drive.setLCruiseVel(lCruiseVel);
+        RobotMap.drive.setRAccel(rAccel);
+        RobotMap.drive.setLAccel(lAccel);
     }
 
     // Called just before this Command runs the first time
@@ -31,19 +41,15 @@ public class TeleMotion extends Command {
     	
     	RobotMap.drive.resetEncoderPos();
     	
-    	RobotMap.drive.incrementRPosition(rVal);
-    	RobotMap.drive.incrementLPosition(lVal);
-    	
-    	
+    	RobotMap.drive.incrementRPosition(rDist);
+    	RobotMap.drive.incrementLPosition(lDist);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	SmartDashboard.putBoolean("isRunningTeleMotion", true);
     }
 
-    // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() 
     {
     	boolean isRDriveFinished = ( Math.abs(RobotMap.rDriveMaster.getClosedLoopError()) < RobotMap.CLOSEDLOOPERROR );

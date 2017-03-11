@@ -7,7 +7,7 @@ import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
+//import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 import org.usfirst.frc.team2220.robot.subsystems.*;
 
@@ -30,7 +30,7 @@ public class RobotMap {
 	public static DoubleSolenoid collectorShifter;
 	public static DoubleSolenoid clawzPiston;
 	
-	public static PowerDistributionPanel panel;
+	//public static PowerDistributionPanel panel;
 	
 	public static TankDrive drive;
 	public static FlameThrower flamethrower;
@@ -68,7 +68,7 @@ public class RobotMap {
 		metererer			= new CANTalon(7);
 		shooter 		= new CANTalon(9);
 		
-		panel = new PowerDistributionPanel();
+		//panel = new PowerDistributionPanel();
 		
 		
 		intake = new Intake();
@@ -119,7 +119,8 @@ public class RobotMap {
 		 * 4Talon native units ~= 1 degree
 		 * 
 		 */
-		/*
+		/* input -> rotations
+		 * 
 		 * 1 wheel rotation = 8 encoder revs
 		 * wheel distance = 2.25 feet or 27 inches
 		 * ~2 feet/wheel rotation
@@ -148,7 +149,7 @@ public class RobotMap {
 		
 		rDriveMaster.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		rDriveMaster.reverseSensor(true);
-		rDriveMaster.configEncoderCodesPerRev(128); //4x128=512
+		rDriveMaster.configEncoderCodesPerRev(256); //4 x 256 = 1024    wrong->4x128=512
 		rDriveMaster.setAllowableClosedLoopErr(CLOSEDLOOPERROR);
 		
 		rDriveMaster.setEncPosition(0);
@@ -164,7 +165,7 @@ public class RobotMap {
 		
 		lDriveMaster.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		lDriveMaster.reverseSensor(false);
-		lDriveMaster.configEncoderCodesPerRev(128);
+		lDriveMaster.configEncoderCodesPerRev(256);
 		lDriveMaster.setAllowableClosedLoopErr(CLOSEDLOOPERROR);
 		
 		lDriveMaster.setEncPosition(0);

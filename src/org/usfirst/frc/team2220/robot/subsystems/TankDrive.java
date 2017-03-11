@@ -4,7 +4,9 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import org.usfirst.frc.team2220.robot.RobotMap;
-import org.usfirst.frc.team2220.robot.commands.*;
+//import org.usfirst.frc.team2220.robot.commands.*;
+
+import com.ctre.CANTalon.TalonControlMode;
 
 /**
  *
@@ -39,15 +41,35 @@ public class TankDrive extends Subsystem
 	 * @param x
 	 */
 
-	public void setCruiseVel(double x)
+	public void setBothCruiseVel(double x)
 	{
+		setRCruiseVel(x);
+		setLCruiseVel(x);
+	}
+	public void setRCruiseVel(double x)
+	{
+		RobotMap.rDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
 		RobotMap.rDriveMaster.setMotionMagicCruiseVelocity(x);
+	}
+	public void setLCruiseVel(double x)
+	{
+		RobotMap.lDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
 		RobotMap.lDriveMaster.setMotionMagicCruiseVelocity(x);
 	}
 	
-	public void setAccel(double x)
+	public void setBothAccel(double x)
 	{
+		setRAccel(x);
+		setLAccel(x);
+	}
+	public void setRAccel(double x)
+	{
+		RobotMap.rDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
 		RobotMap.rDriveMaster.setMotionMagicAcceleration(x);
+	}
+	public void setLAccel(double x)
+	{
+		RobotMap.lDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
 		RobotMap.lDriveMaster.setMotionMagicAcceleration(x);
 	}
 	// NEGATIVE FOR BACKWARDS

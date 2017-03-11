@@ -92,13 +92,13 @@ public class Robot extends IterativeRobot {
 	{
 		//SmartDashboard.putNumber("scale", RobotMap.drive.getScale());
 		//SmartDashboard.putBoolean("compressorOn", RobotMap.compressor.enabled());
-		SmartDashboard.putNumber("rSetpoint", RobotMap.drive.rDriveMotorSetpoint);
+		SmartDashboard.putNumber("rSetpoint", TankDrive.rDriveMotorSetpoint);
 		SmartDashboard.putNumber("rActual", RobotMap.rDriveMaster.getPosition());
 		SmartDashboard.putNumber("rPower", RobotMap.rDriveMaster.getOutputVoltage());
 		SmartDashboard.putNumber("rError", RobotMap.rDriveMaster.getClosedLoopError());
 		SmartDashboard.putNumber("rEnc", RobotMap.rDriveMaster.getEncPosition());
 		
-		SmartDashboard.putNumber("lSetpoint", RobotMap.drive.lDriveMotorSetpoint);
+		SmartDashboard.putNumber("lSetpoint", TankDrive.lDriveMotorSetpoint);
 		SmartDashboard.putNumber("lActual", RobotMap.lDriveMaster.getPosition());
 		SmartDashboard.putNumber("lPower", RobotMap.lDriveMaster.getOutputVoltage());
 		SmartDashboard.putNumber("lError", RobotMap.lDriveMaster.getClosedLoopError());

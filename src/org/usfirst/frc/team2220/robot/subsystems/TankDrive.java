@@ -18,10 +18,10 @@ public class TankDrive extends Subsystem
 
 	public void resetEncoderPos()
 	{
-		rDriveMotorSetpoint = 0;
-		lDriveMotorSetpoint = 0;
-		RobotMap.rDriveMaster.setEncPosition(0);
-		RobotMap.lDriveMaster.setEncPosition(0);
+		rDriveMotorSetpoint = RobotMap.rDriveMaster.getPosition();
+		lDriveMotorSetpoint = RobotMap.lDriveMaster.getPosition();
+	//	RobotMap.rDriveMaster.setEncPosition(0);
+	//	RobotMap.lDriveMaster.setEncPosition(0);
 	}
 	
 	public void setRPosition(double val)
@@ -33,7 +33,23 @@ public class TankDrive extends Subsystem
 	{
 		RobotMap.lDriveMaster.set(val);
 	}
+	
+	/**
+	 * motion profiling setters
+	 * @param x
+	 */
 
+	public void setCruiseVel(double x)
+	{
+		RobotMap.rDriveMaster.setMotionMagicCruiseVelocity(x);
+		RobotMap.lDriveMaster.setMotionMagicCruiseVelocity(x);
+	}
+	
+	public void setAccel(double x)
+	{
+		RobotMap.rDriveMaster.setMotionMagicAcceleration(x);
+		RobotMap.lDriveMaster.setMotionMagicAcceleration(x);
+	}
 	// NEGATIVE FOR BACKWARDS
 	public void incrementRPosition(double x)
 	{

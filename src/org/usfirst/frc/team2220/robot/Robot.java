@@ -104,6 +104,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("lError", RobotMap.lDriveMaster.getClosedLoopError());
 		SmartDashboard.putNumber("lEnc", RobotMap.lDriveMaster.getEncPosition());
 		//SmartDashboard.putBoolean("aButton", OI.aButton.get());
+		
+		SmartDashboard.putNumber("rCruise", RobotMap.rDriveMaster.getMotionMagicCruiseVelocity());
+		SmartDashboard.putNumber("rAccel", RobotMap.rDriveMaster.getMotionMagicAcceleration());
 	}
 
 	/**

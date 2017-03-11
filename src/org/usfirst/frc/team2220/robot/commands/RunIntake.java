@@ -3,6 +3,7 @@ package org.usfirst.frc.team2220.robot.commands;
 import org.usfirst.frc.team2220.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -24,6 +25,7 @@ public class RunIntake extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	RobotMap.intake.run(runVal);
+    	SmartDashboard.putNumber("collectorSpeed", runVal);
     }
 
     // Make this return true when this Command no longer needs to run execute()

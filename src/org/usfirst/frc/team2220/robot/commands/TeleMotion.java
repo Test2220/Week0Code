@@ -4,6 +4,7 @@ import org.usfirst.frc.team2220.robot.RobotMap;
 
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -13,10 +14,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TeleMotion extends Command {
 
 	double rVal, lVal;
-    public TeleMotion(double r, double l) {
+	double a, v;
+    public TeleMotion(double r, double l, double accel, double cVel) {
         requires(RobotMap.drive);
         rVal = r;
         lVal = l;
+        a = accel;
+        v = cVel;
+        
     }
 
     // Called just before this Command runs the first time
@@ -29,6 +34,8 @@ public class TeleMotion extends Command {
     	
     	RobotMap.drive.incrementRPosition(rVal);
     	RobotMap.drive.incrementLPosition(lVal);
+    	RobotMap.drive.setAccel(a);
+        RobotMap.drive.setCruiseVel(v);
     	
     }
 

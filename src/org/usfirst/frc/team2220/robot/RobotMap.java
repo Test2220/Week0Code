@@ -55,7 +55,7 @@ public class RobotMap {
 	
 	public static void init()
 	{
-		CameraServer.getInstance().startAutomaticCapture();
+		//CameraServer.getInstance().startAutomaticCapture();
 		
 		lDriveMaster 		= new CANTalon(1);
 		lDriveSlave 		= new CANTalon(2);
@@ -114,13 +114,37 @@ public class RobotMap {
 		 * 
 		 * if Closed loopError = 61.44 our range = +- 0.5 inches
 		 * 
+		 * 15 position units per rotation?
 		 * 
 		 * 4Talon native units ~= 1 degree
 		 * 
 		 */
+		/*
+		 * 1 wheel rotation = 8 encoder revs
+		 * wheel distance = 2.25 feet or 27 inches
+		 * ~2 feet/wheel rotation
+		 * 
+		 * (theta/360) * 2 * pi * r
+		 * (theta/360) * 2 * pi * (r + 2.25)
+		 * 
+		 * function -> theta, radius, right or left, time value
+		 * 
+		 * if right, left val bigger
+		 * 
+		 * cruiseVel in fps = movDist / (time - accel time)
+		 * divide by 2 ft per rotation -> rotation per second
+		 * multiply * 60 -> RPM
+		 * 
+		 * set cruiseVel
+		 * 
+		 * accel = cruiseVel / accelTime (this will be correctly scaled
+		 * 
+		 * 
+		 * 
+		 */
 		
-		
-		
+		int accel = 400;
+		int cruiseVel = 400;
 		
 		rDriveMaster.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		rDriveMaster.reverseSensor(true);
@@ -129,24 +153,26 @@ public class RobotMap {
 		
 		rDriveMaster.setEncPosition(0);
 
-		rDriveMaster.setF(119.47); //encoder ticks per 100ms -> 9.34 RPS
-		rDriveMaster.setPID(2.0, 0, 50); //i->0.001 //p->2.4
-		rDriveMaster.setMotionMagicAcceleration(1000);   //RPM/S
-		rDriveMaster.setMotionMagicCruiseVelocity(500); //RPM
+		double kP = 2.0;
+		double kD = 0.0; //50
+		rDriveMaster.setF(240);//119.47); //encoder ticks per 100ms -> 9.34 RPS
+		rDriveMaster.setPID(kP, 0.001, kD); //i->0.001 //p->2.4
+		rDriveMaster.setMotionMagicAcceleration(accel);   //RPM/S
+		rDriveMaster.setMotionMagicCruiseVelocity(cruiseVel); //RPM
 		
 		
 		
 		lDriveMaster.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		lDriveMaster.reverseSensor(true);
+		lDriveMaster.reverseSensor(false);
 		lDriveMaster.configEncoderCodesPerRev(128);
 		lDriveMaster.setAllowableClosedLoopErr(CLOSEDLOOPERROR);
 		
 		lDriveMaster.setEncPosition(0);
 
-		lDriveMaster.setF(119.47); //encoder ticks per 100ms -> 9.34 RPS
-		lDriveMaster.setPID(2.0, 0, 50); //i->0.001 //p->2.4
-		lDriveMaster.setMotionMagicAcceleration(1000);   //RPM/S
-		lDriveMaster.setMotionMagicCruiseVelocity(500); //RPM
+		lDriveMaster.setF(240);//119.47); //encoder ticks per 100ms -> 9.34 RPS
+		lDriveMaster.setPID(kP, 0.001, kD); //i->0.001 //p->2.4
+		lDriveMaster.setMotionMagicAcceleration(accel);   //RPM/S
+		lDriveMaster.setMotionMagicCruiseVelocity(cruiseVel); //RPM
 		
 	
 		

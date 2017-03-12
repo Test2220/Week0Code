@@ -1,10 +1,12 @@
 
 package org.usfirst.frc.team2220.robot;
 
+import org.usfirst.frc.team2220.robot.commands.*;
 import org.usfirst.frc.team2220.robot.subsystems.TankDrive;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -20,18 +22,27 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	SendableChooser<Command> chooser = new SendableChooser<>();
+	SendableChooser<Command> autoChooser;
+	CommandGroup autoCommand;
 
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	@Override
-	public void robotInit() {
+	public void robotInit() 
+	{
 		RobotMap.init();
 		OI.init();
 		
-
+		autoChooser = new SendableChooser<>();
+		autoChooser.addDefault("Center Gear", new AutoCenterGear());
+		autoChooser.addObject("Left Gear", new AutoLeftGear());
+		autoChooser.addObject("Right Gear", new AutoRightGear());
+		autoChooser.addObject("Blue Hopper", new AutoBlueHopper());
+		autoChooser.addObject("Blue Shoot'n'Gear", new AutoBlueShootAndGear());
+		
+		SmartDashboard.putData("Auto Chooser", autoChooser);
 	}
 
 	/**
@@ -40,13 +51,28 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
 	 */
 	@Override
-	public void disabledInit() {
-
+	public void disabledInit() 
+	{
+		if(autoCommand != null)
+			autoCommand.cancel();
+		Scheduler.getInstance().removeAll();
 	}
 
 	@Override
 	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
+		if(autoCommand != null)
+			autoCommand.cancel();
+		Scheduler.getInstance().removeAll();
+		
+		try
+		{
+			SmartDashboard.getData("Auto Chooser");
+		}
+		catch(Exception e)
+		{
+			if(autoChooser != null)
+				SmartDashboard.putData("Auto Chooser", autoChooser);
+		}
 	}
 
 	/**
@@ -61,8 +87,11 @@ public class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	@Override
-	public void autonomousInit() {
-
+	public void autonomousInit() 
+	{
+		//autoCommand = (CommandGroup) autoChooser.getSelected();
+		autoCommand = new AutoRightGear();
+		autoCommand.start();
 	}
 
 	/**
@@ -71,11 +100,16 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		
+		updateSmartDashboard();
 	}
 
 	@Override
-	public void teleopInit() {
-		
+	public void teleopInit() 
+	{
+		if(autoCommand != null)
+			autoCommand.cancel();
+		Scheduler.getInstance().removeAll(); //clears commands every time teleop initialized
 	}
 
 	/**
@@ -107,6 +141,12 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putNumber("rCruise", RobotMap.rDriveMaster.getMotionMagicCruiseVelocity());
 		SmartDashboard.putNumber("rAccel", RobotMap.rDriveMaster.getMotionMagicAcceleration());
+		
+		SmartDashboard.putNumber("lCruise", RobotMap.lDriveMaster.getMotionMagicCruiseVelocity());
+		SmartDashboard.putNumber("lAccel", RobotMap.lDriveMaster.getMotionMagicAcceleration());
+		
+		SmartDashboard.putString("Command", Scheduler.getInstance().toString());
+		
 	}
 
 	/**

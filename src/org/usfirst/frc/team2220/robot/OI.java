@@ -51,25 +51,32 @@ public class OI {
 	//XboxController x = new XboxController(1);
 	public static void init()
 	{
-		//15 = 1 rotation?
-		//Driver
-		aButtonD.whenPressed(new Shift());
-	//	bButtonD.whenPressed(new TeleMotion(30, -30));
-		//bButtonD.whenPressed(new ApproachGear());
-		bButtonD.whenPressed(new FBCameraMotion());
-	//	bButtonD.whenPressed(new OpenCLAWZ());
-		yButtonD.whenPressed(new TeleMotion(90, 90, 500, 1000));
-		xButtonD.whenPressed(new TeleMotion(15, -15, 100, 500));
+		//////////
+		//Driver//
+		//////////
 		
+		aButtonD.whenPressed(new Shift());
+		/*
+		bButtonD.whenPressed(new GoAwayAndComeBack());
+		//bButtonD.whenPressed(new FBCameraMotion());
+		//bButtonD.whenPressed(new CurveMotion(360, 4, false, 0.5, 3));
+		//bButtonD.whenPressed(new EllipseMotion(10, 7, 1, 12));
+		yButtonD.whenPressed(new TeleMotion(56, 56, 500, 1000));
+		xButtonD.whenPressed(new TeleMotion(7.25, -7.25, 100, 500));
+		*/
+		//RPM/s and RPM
 		//lBumperD.whenPressed(new TeleMotion(30, 30));
 		//rBumperD.whenPressed(new FBCameraMotion());
 		
 		isDriving.whileActive(new DriveWithControllers());
 		isDriving.whenInactive(new DriveOff());
 		
-		//Manipulator
+		///////////////
+		//Manipulator//
+		///////////////
+		
 		lTriggerM.whileActive(new RunIntake(1.0));
-	//	rTriggerM.whileActive(new RunIntake(-1.0));
+		//	rTriggerM.whileActive(new RunIntake(-1.0));
 		lBumperM.whileHeld(new RunWasher(1.0));
 		rBumperM.whileHeld(new RunWasher(-1.0));
 		aButtonM.whenPressed(new RootyTootyPointAndShooty());

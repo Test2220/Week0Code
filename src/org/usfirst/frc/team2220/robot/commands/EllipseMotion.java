@@ -13,6 +13,7 @@ public class EllipseMotion extends Command {
 
 	public static final double WHEEL_SPACING = 2.25; //feet
 	double rDist, lDist;
+	double rCruiseVel, lCruiseVel, rAccel, lAccel;
 	
 	//theta in degrees, radii in feet, time in seconds
     public EllipseMotion(double rVal, double lVal, double accelTime, double totalTime) 
@@ -22,15 +23,12 @@ public class EllipseMotion extends Command {
         rDist = rVal;
         lDist = lVal;
         
-        double rCruiseVel = ( (rDist / (totalTime - accelTime)) / 2 ) * 60;
-        double lCruiseVel = ( (rDist / (totalTime - accelTime)) / 2 ) * 60;
-        double rAccel = rCruiseVel / accelTime;
-        double lAccel = lCruiseVel / accelTime;
+        rCruiseVel = ( (rDist / (totalTime - accelTime)) / 2 ) * 60;
+        lCruiseVel = ( (lDist / (totalTime - accelTime)) / 2 ) * 60;
+        rAccel = rCruiseVel / accelTime;
+        lAccel = lCruiseVel / accelTime;
         
-        RobotMap.drive.setRCruiseVel(rCruiseVel);
-        RobotMap.drive.setLCruiseVel(lCruiseVel);
-        RobotMap.drive.setRAccel(rAccel);
-        RobotMap.drive.setLAccel(lAccel);
+        
     }
 
     // Called just before this Command runs the first time
@@ -39,6 +37,11 @@ public class EllipseMotion extends Command {
     	RobotMap.rDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
     	RobotMap.lDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
     	
+    	RobotMap.drive.setRCruiseVel(rCruiseVel);
+        RobotMap.drive.setLCruiseVel(lCruiseVel);
+        RobotMap.drive.setRAccel(rAccel);
+        RobotMap.drive.setLAccel(lAccel);
+        
     	RobotMap.drive.resetEncoderPos();
     	
     	RobotMap.drive.incrementRPosition(rDist);
@@ -52,9 +55,7 @@ public class EllipseMotion extends Command {
 
     protected boolean isFinished() 
     {
-    	boolean isRDriveFinished = ( Math.abs(RobotMap.rDriveMaster.getClosedLoopError()) < RobotMap.CLOSEDLOOPERROR );
-    	boolean isLDriveFinished = ( Math.abs(RobotMap.rDriveMaster.getClosedLoopError()) < RobotMap.CLOSEDLOOPERROR );
-        return isRDriveFinished && isLDriveFinished;
+        return RobotMap.drive.hasHitRSetpoint() && RobotMap.drive.hasHitLSetpoint();
     }
 
     // Called once after isFinished returns true

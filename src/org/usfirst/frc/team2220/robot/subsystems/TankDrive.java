@@ -17,6 +17,7 @@ public class TankDrive extends Subsystem
 	// public static double scale = 1;
 	public static double rDriveMotorSetpoint = 0;
 	public static double lDriveMotorSetpoint = 0;
+	public static final double ALLOWED_ERROR = 15;
 
 	public void resetEncoderPos()
 	{
@@ -26,6 +27,7 @@ public class TankDrive extends Subsystem
 	//	RobotMap.lDriveMaster.setEncPosition(0);
 	}
 	
+	/*
 	public void setRPosition(double val)
 	{
 		RobotMap.rDriveMaster.set(val);
@@ -35,6 +37,7 @@ public class TankDrive extends Subsystem
 	{
 		RobotMap.lDriveMaster.set(val);
 	}
+	*/
 	
 	/**
 	 * motion profiling setters
@@ -48,12 +51,10 @@ public class TankDrive extends Subsystem
 	}
 	public void setRCruiseVel(double x)
 	{
-		RobotMap.rDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
 		RobotMap.rDriveMaster.setMotionMagicCruiseVelocity(x);
 	}
 	public void setLCruiseVel(double x)
 	{
-		RobotMap.lDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
 		RobotMap.lDriveMaster.setMotionMagicCruiseVelocity(x);
 	}
 	
@@ -64,14 +65,14 @@ public class TankDrive extends Subsystem
 	}
 	public void setRAccel(double x)
 	{
-		RobotMap.rDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
 		RobotMap.rDriveMaster.setMotionMagicAcceleration(x);
 	}
 	public void setLAccel(double x)
 	{
-		RobotMap.lDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
 		RobotMap.lDriveMaster.setMotionMagicAcceleration(x);
 	}
+	
+	
 	// NEGATIVE FOR BACKWARDS
 	public void incrementRPosition(double x)
 	{
@@ -88,17 +89,17 @@ public class TankDrive extends Subsystem
 	public void incrementAllPos(double x)
 	{
 		incrementRPosition(x);
-		// incrementLPosition(x);
+		incrementLPosition(x);
 	}
 
 	public boolean hasHitRSetpoint()
 	{
-		return Math.abs(RobotMap.rDriveMaster.getPosition() - rDriveMotorSetpoint) < 15;
+		return Math.abs(RobotMap.rDriveMaster.getClosedLoopError()) < RobotMap.CLOSEDLOOPERROR;
 	}
 
 	public boolean hasHitLSetpoint()
 	{
-		return Math.abs(RobotMap.lDriveMaster.getPosition() - lDriveMotorSetpoint) < 15;
+		return Math.abs(RobotMap.lDriveMaster.getClosedLoopError()) < RobotMap.CLOSEDLOOPERROR;
 	}
 
 	public void controllerTank(double rVal, double lVal)

@@ -14,8 +14,6 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 	public static XboxController driverStick = new XboxController(0);
-//	public static Joystick driverStick = new Joystick(0);
-	//public static Joystick manipulatorStick = new Joystick(1);
 	public static XboxController manipulatorStick = new XboxController(1);
 	public static int lAxis = 1;
 	public static int rAxis = 5;
@@ -25,10 +23,12 @@ public class OI {
 	/**
 	 * DRIVER TRIGGERS
 	 */
+	/*
 	private static Button aButtonD = new JoystickButton(driverStick, 1);
 	private static Button bButtonD = new JoystickButton(driverStick, 2);
 	private static Button xButtonD = new JoystickButton(driverStick, 3);
 	private static Button yButtonD = new JoystickButton(driverStick, 4);
+	*/
 	private static Button lBumperD = new JoystickButton(manipulatorStick, 5);
 	private static Button rBumperD = new JoystickButton(manipulatorStick, 6);
 	
@@ -47,26 +47,23 @@ public class OI {
 	
 	public static final int LTRIGGER = 2, RTRIGGER = 3;
 	private static XboxTrigger lTriggerM = new XboxTrigger(manipulatorStick, 2);
-	private static XboxTrigger rTriggerM = new XboxTrigger(manipulatorStick, 3);
-	//XboxController x = new XboxController(1);
+	
+	
+	//private static XboxTrigger rTriggerM = new XboxTrigger(manipulatorStick, 3);
+
 	public static void init()
 	{
 		//////////
 		//Driver//
 		//////////
-		
-		aButtonD.whenPressed(new Shift());
 		/*
-		bButtonD.whenPressed(new GoAwayAndComeBack());
-		//bButtonD.whenPressed(new FBCameraMotion());
-		//bButtonD.whenPressed(new CurveMotion(360, 4, false, 0.5, 3));
-		//bButtonD.whenPressed(new EllipseMotion(10, 7, 1, 12));
-		yButtonD.whenPressed(new TeleMotion(56, 56, 500, 1000));
-		xButtonD.whenPressed(new TeleMotion(7.25, -7.25, 100, 500));
+		bButtonD.whenPressed(new FBCameraMotion(4));
+		yButtonD.whenPressed(new TeleMotion(56, 56, 500, 1000)); //go forward
+		xButtonD.whenPressed(new TeleMotion(7.25, -7.25, 100, 500)); //turn
 		*/
-		//RPM/s and RPM
-		//lBumperD.whenPressed(new TeleMotion(30, 30));
-		//rBumperD.whenPressed(new FBCameraMotion());
+		
+		lBumperD.whenPressed(new ShiftDrivetrain(true));
+		rBumperD.whenPressed(new ShiftDrivetrain(false));
 		
 		isDriving.whileActive(new DriveWithControllers());
 		isDriving.whenInactive(new DriveOff());
@@ -76,23 +73,13 @@ public class OI {
 		///////////////
 		
 		lTriggerM.whileActive(new RunIntake(1.0));
-		//	rTriggerM.whileActive(new RunIntake(-1.0));
+		//	rTriggerM.whileActive(new RunIntake(-1.0)); //doing this could break ratchet
 		lBumperM.whileHeld(new RunWasher(1.0));
 		rBumperM.whileHeld(new RunWasher(-1.0));
 		aButtonM.whenPressed(new RootyTootyPointAndShooty());
 		xButtonM.whenPressed(new StopTheFuels());
-		yButtonM.whenPressed(new ShiftCollectorON());
-		bButtonM.whenPressed(new ShiftCollectorOFF());
-
-		/*
-		//lTriggerM.whenActive(new potatoe());
-		
-		bButtonM.whileHeld(new RootyTootyPointAndShooty(1.0));
-		rBumperM.whileHeld(new RunWasher(1.0));
-		lBumperM.whileHeld(new RunWasher(-0.6));
-		yButtonM.whileHeld(new Meter(-1.0));
-		xButtonM.whileHeld(new RunIntake(1.0));
-		*/
+		yButtonM.whenPressed(new ShiftCollector(true));
+		bButtonM.whenPressed(new ShiftCollector(false));
 		
 	}
 }

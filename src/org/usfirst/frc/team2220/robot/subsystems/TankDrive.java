@@ -4,9 +4,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import org.usfirst.frc.team2220.robot.RobotMap;
-//import org.usfirst.frc.team2220.robot.commands.*;
-
-import com.ctre.CANTalon.TalonControlMode;
 
 /**
  *
@@ -23,21 +20,7 @@ public class TankDrive extends Subsystem
 	{
 		rDriveMotorSetpoint = RobotMap.rDriveMaster.getPosition();
 		lDriveMotorSetpoint = RobotMap.lDriveMaster.getPosition();
-	//	RobotMap.rDriveMaster.setEncPosition(0);
-	//	RobotMap.lDriveMaster.setEncPosition(0);
 	}
-	
-	/*
-	public void setRPosition(double val)
-	{
-		RobotMap.rDriveMaster.set(val);
-	}
-	
-	public void setLPosition(double val)
-	{
-		RobotMap.lDriveMaster.set(val);
-	}
-	*/
 	
 	/**
 	 * motion profiling setters
@@ -106,7 +89,7 @@ public class TankDrive extends Subsystem
 	{
 		RobotMap.rDriveMaster.set(rVal);
 		RobotMap.lDriveMaster.set(lVal);
-		shift(RobotMap.isInHighGear);
+		shift(RobotMap.driveInHighGear);
 	}
 
 	public void shift(boolean highGear)
@@ -127,15 +110,9 @@ public class TankDrive extends Subsystem
 		RobotMap.lDriveMaster.set(0);
 	}
 
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
-
-	// Set the default command for a subsystem here.
-	// setDefaultCommand(new MySpecialCommand());
 	@Override
 	protected void initDefaultCommand()
 	{
-		// setDefaultCommand(new HoldMotionMode());
-		//setDefaultCommand(new DriveOff());
+		//no default command
 	}
 }

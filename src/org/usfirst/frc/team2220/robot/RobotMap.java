@@ -36,7 +36,9 @@ public class RobotMap {
 	public static Washer washerSubsystem;
 	public static Intake intake;
 	
-	public static boolean isInHighGear;
+	public static boolean driveInHighGear;
+	
+	public static boolean collectorInHighGear;
 	
 	public static Compressor compressor;
 	
@@ -84,7 +86,8 @@ public class RobotMap {
 	
 		compressor = new Compressor();
 		
-		isInHighGear = false;
+		driveInHighGear = false;
+		collectorInHighGear = true;
 		
 		//TODO test before running
 		lDriveSlave.changeControlMode(TalonControlMode.Follower);

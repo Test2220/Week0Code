@@ -21,9 +21,9 @@ public class AutoRightGear extends CommandGroup {
     	addSequential(new FBCameraMotion(2));
     	addSequential(new AutoMotion(4, 4, driveAccel, driveSpeed, 2));
     	
-    	addSequential(new ShiftCollectorOFF());
+    	addSequential(new ShiftCollector(false));
     	addSequential(new Delay(3));
-    	addSequential(new ShiftCollectorON());
+    	addSequential(new ShiftCollector(true));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

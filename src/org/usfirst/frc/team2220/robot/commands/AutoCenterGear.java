@@ -16,9 +16,9 @@ public class AutoCenterGear extends CommandGroup {
     public AutoCenterGear() 
     {
     	addSequential(new AutoMotion(distance, distance, driveAccel, driveSpeed, 5));
-    	addSequential(new ShiftCollectorOFF());
+    	addSequential(new ShiftCollector(false));
     	addSequential(new Delay(3));
-    	addSequential(new ShiftCollectorON());
+    	addSequential(new ShiftCollector(true));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

@@ -2,7 +2,6 @@
 package org.usfirst.frc.team2220.robot;
 
 import org.usfirst.frc.team2220.robot.commands.*;
-import org.usfirst.frc.team2220.robot.subsystems.TankDrive;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -14,11 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
+ * Central robot processing
  */
 public class Robot extends IterativeRobot {
 
@@ -47,8 +42,6 @@ public class Robot extends IterativeRobot {
 
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
-	 * You can use it to reset any subsystem information you want to clear when
-	 * the robot is disabled.
 	 */
 	@Override
 	public void disabledInit() 
@@ -64,6 +57,7 @@ public class Robot extends IterativeRobot {
 			autoCommand.cancel();
 		Scheduler.getInstance().removeAll();
 		
+		//if autochooser isn't on dashboard, keep trying
 		try
 		{
 			SmartDashboard.getData("Auto Chooser");
@@ -76,21 +70,13 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
+	 * Selects command by chooser or manual
 	 */
 	@Override
 	public void autonomousInit() 
 	{
-		//autoCommand = (CommandGroup) autoChooser.getSelected();
-		autoCommand = new AutoRightGear();
+		//autoCommand = (CommandGroup) autoChooser.getSelected(); //chooser
+		autoCommand = new AutoRightGear(); //manual
 		autoCommand.start();
 	}
 
@@ -124,28 +110,9 @@ public class Robot extends IterativeRobot {
 	
 	public void updateSmartDashboard()
 	{
-		//SmartDashboard.putNumber("scale", RobotMap.drive.getScale());
-		//SmartDashboard.putBoolean("compressorOn", RobotMap.compressor.enabled());
-		SmartDashboard.putNumber("rSetpoint", TankDrive.rDriveMotorSetpoint);
-		SmartDashboard.putNumber("rActual", RobotMap.rDriveMaster.getPosition());
-		SmartDashboard.putNumber("rPower", RobotMap.rDriveMaster.getOutputVoltage());
-		SmartDashboard.putNumber("rError", RobotMap.rDriveMaster.getClosedLoopError());
-		SmartDashboard.putNumber("rEnc", RobotMap.rDriveMaster.getEncPosition());
+		SmartDashboard.putBoolean("DrivetrainGear", RobotMap.driveInHighGear);
+		SmartDashboard.putBoolean("CollectorGear",  RobotMap.collectorInHighGear);
 		
-		SmartDashboard.putNumber("lSetpoint", TankDrive.lDriveMotorSetpoint);
-		SmartDashboard.putNumber("lActual", RobotMap.lDriveMaster.getPosition());
-		SmartDashboard.putNumber("lPower", RobotMap.lDriveMaster.getOutputVoltage());
-		SmartDashboard.putNumber("lError", RobotMap.lDriveMaster.getClosedLoopError());
-		SmartDashboard.putNumber("lEnc", RobotMap.lDriveMaster.getEncPosition());
-		//SmartDashboard.putBoolean("aButton", OI.aButton.get());
-		
-		SmartDashboard.putNumber("rCruise", RobotMap.rDriveMaster.getMotionMagicCruiseVelocity());
-		SmartDashboard.putNumber("rAccel", RobotMap.rDriveMaster.getMotionMagicAcceleration());
-		
-		SmartDashboard.putNumber("lCruise", RobotMap.lDriveMaster.getMotionMagicCruiseVelocity());
-		SmartDashboard.putNumber("lAccel", RobotMap.lDriveMaster.getMotionMagicAcceleration());
-		
-		SmartDashboard.putString("Command", Scheduler.getInstance().toString());
 		
 	}
 

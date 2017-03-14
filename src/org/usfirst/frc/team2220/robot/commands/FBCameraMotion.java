@@ -6,7 +6,6 @@ import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.TimedCommand;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -20,7 +19,6 @@ public class FBCameraMotion extends Command
 	double prevMotorR = 0, prevMotorL = 0;
 	double allowableError = 10;
 	double prevCamVal = 0, camSetpoint = 60;//160
-	//double RTLVal = 100000;
 	double midpoint = 100000;
 	NetworkTable contourTable;
 	Timer t;

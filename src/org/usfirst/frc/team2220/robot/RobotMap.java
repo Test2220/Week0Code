@@ -36,7 +36,7 @@ public class RobotMap {
 	public static Washer washerSubsystem;
 	public static Intake intake;
 	
-	public static boolean driveInHighGear;
+	public static boolean driveInHighGear = false;
 	
 	public static boolean collectorInHighGear;
 	
@@ -59,8 +59,8 @@ public class RobotMap {
 		
 		lDriveMaster 		= new CANTalon(1);
 		lDriveSlave 		= new CANTalon(2);
-		rDriveMaster 		= new CANTalon(3);
-		rDriveSlave  		= new CANTalon(4);
+		rDriveMaster 		= new CANTalon(3); //3
+		rDriveSlave  		= new CANTalon(4); //4
 		
 	 	collectorMaster 	= new CANTalon(5); //5
 		collectorSlave		= new CANTalon(6); //6
@@ -78,8 +78,8 @@ public class RobotMap {
 		compressor = new Compressor();
 		
 		
-		driveShifter = new DoubleSolenoid(0, 3);
-		collectorShifter = new DoubleSolenoid(6, 7); //6 and 7?
+		driveShifter = new DoubleSolenoid(6, 7);
+		collectorShifter = new DoubleSolenoid(0, 1); //6 and 7?
 		
 		drive = new TankDrive();
 		flamethrower = new FlameThrower();

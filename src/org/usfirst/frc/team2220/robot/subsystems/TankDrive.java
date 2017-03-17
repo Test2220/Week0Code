@@ -89,7 +89,7 @@ public class TankDrive extends Subsystem
 	{
 		RobotMap.rDriveMaster.set(rVal);
 		RobotMap.lDriveMaster.set(lVal);
-		shift(RobotMap.driveInHighGear);
+		//shift(RobotMap.driveInHighGear);
 	}
 
 	public void shift(boolean highGear)

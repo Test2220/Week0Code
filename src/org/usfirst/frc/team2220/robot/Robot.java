@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	SendableChooser<Command> autoChooser;
-	CommandGroup autoCommand;
+	Command autoCommand;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -31,7 +31,8 @@ public class Robot extends IterativeRobot {
 		OI.init();
 		
 		autoChooser = new SendableChooser<>();
-		autoChooser.addDefault("Center Gear", new AutoCenterGear());
+		autoChooser.addDefault("do nothing", new Delay(10));
+		autoChooser.addObject("Center Gear", new AutoCenterGear());
 		autoChooser.addObject("Left Gear", new AutoLeftGear());
 		autoChooser.addObject("Right Gear", new AutoRightGear());
 		autoChooser.addObject("Blue Hopper", new AutoBlueHopper());
@@ -75,9 +76,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() 
 	{
-		//autoCommand = (CommandGroup) autoChooser.getSelected(); //chooser
-		autoCommand = new AutoRightGear(); //manual
-		autoCommand.start();
+		try
+		{
+			autoCommand = (Command) autoChooser.getSelected(); //chooser
+			autoCommand.start();
+		}
+		catch (Exception e) {}
+		//autoCommand = new AutoRightGear(); //manual
+		//
 	}
 
 	/**
@@ -112,6 +118,8 @@ public class Robot extends IterativeRobot {
 	{
 		SmartDashboard.putBoolean("DrivetrainGear", RobotMap.driveInHighGear);
 		SmartDashboard.putBoolean("CollectorGear",  RobotMap.collectorInHighGear);
+		SmartDashboard.putNumber("rEnc", RobotMap.rDriveMaster.getEncPosition());
+		SmartDashboard.putNumber("lEnc", RobotMap.lDriveMaster.getEncPosition());
 		
 		
 	}

@@ -9,16 +9,17 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
  */
 public class ShiftCollector extends InstantCommand {
 
+	boolean shiftVal;
 	public ShiftCollector(boolean shiftVal) 
 	{
         super();
         requires(RobotMap.intake);
-        RobotMap.collectorInHighGear = shiftVal;
+        this.shiftVal = shiftVal;
     }
 
     // Called once when the command executes
     protected void initialize() 
     {
-    	RobotMap.intake.shift(RobotMap.collectorInHighGear);
+    	RobotMap.intake.shift(shiftVal);
     }
 }

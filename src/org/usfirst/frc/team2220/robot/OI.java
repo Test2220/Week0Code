@@ -23,12 +23,12 @@ public class OI {
 	/**
 	 * DRIVER TRIGGERS
 	 */
-	/*
+	
 	private static Button aButtonD = new JoystickButton(driverStick, 1);
 	private static Button bButtonD = new JoystickButton(driverStick, 2);
 	private static Button xButtonD = new JoystickButton(driverStick, 3);
 	private static Button yButtonD = new JoystickButton(driverStick, 4);
-	*/
+	
 	private static Button lBumperD = new JoystickButton(manipulatorStick, 5);
 	private static Button rBumperD = new JoystickButton(manipulatorStick, 6);
 	
@@ -62,8 +62,8 @@ public class OI {
 		xButtonD.whenPressed(new TeleMotion(7.25, -7.25, 100, 500)); //turn
 		*/
 		
-		lBumperD.whenPressed(new ShiftDrivetrain(true));
-		rBumperD.whenPressed(new ShiftDrivetrain(false));
+		aButtonD.whenPressed(new ShiftDrivetrain(true));
+		xButtonD.whenPressed(new ShiftDrivetrain(false));
 		
 		isDriving.whileActive(new DriveWithControllers());
 		isDriving.whenInactive(new DriveOff());

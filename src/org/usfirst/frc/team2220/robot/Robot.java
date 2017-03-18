@@ -19,6 +19,7 @@ public class Robot extends IterativeRobot {
 
 	SendableChooser<Command> autoChooser;
 	Command autoCommand;
+	int printCount = 0;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -37,6 +38,7 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Right Gear", new AutoRightGear());
 		autoChooser.addObject("Blue Hopper", new AutoBlueHopper());
 		autoChooser.addObject("Blue Shoot'n'Gear", new AutoBlueShootAndGear());
+		autoChooser.addObject("Baseline", new AutoBaseline());
 		
 		SmartDashboard.putData("Auto Chooser", autoChooser);
 	}
@@ -116,10 +118,14 @@ public class Robot extends IterativeRobot {
 	
 	public void updateSmartDashboard()
 	{
-		SmartDashboard.putBoolean("DrivetrainGear", RobotMap.driveInHighGear);
-		SmartDashboard.putBoolean("CollectorGear",  RobotMap.collectorInHighGear);
-		SmartDashboard.putNumber("rEnc", RobotMap.rDriveMaster.getEncPosition());
-		SmartDashboard.putNumber("lEnc", RobotMap.lDriveMaster.getEncPosition());
+		printCount++;
+		if(printCount % 100 == 0)
+		{
+			SmartDashboard.putBoolean("DrivetrainGear", RobotMap.driveInHighGear);
+			SmartDashboard.putBoolean("CollectorGear",  RobotMap.collectorInHighGear);
+			SmartDashboard.putNumber("rEnc", RobotMap.rDriveMaster.getEncPosition());
+			SmartDashboard.putNumber("lEnc", RobotMap.lDriveMaster.getEncPosition());
+		}
 		
 		
 	}

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
 public class AutoShoot extends TimedCommand {
 
 	double meterPower = -1.0;
-	double shooterPower = 0.7;
+	double shooterPower = 0.8;
 	Timer startTimer;
 	
 	public AutoShoot(double timeout) {

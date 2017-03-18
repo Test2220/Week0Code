@@ -56,8 +56,9 @@ public class OI {
 		//////////
 		//Driver//
 		//////////
+		
+		yButtonD.whenPressed(new TeleMotion(2.5, 2.5, 500, 1000));
 		/*
-		bButtonD.whenPressed(new FBCameraMotion(4));
 		yButtonD.whenPressed(new TeleMotion(56, 56, 500, 1000)); //go forward
 		xButtonD.whenPressed(new TeleMotion(7.25, -7.25, 100, 500)); //turn
 		*/

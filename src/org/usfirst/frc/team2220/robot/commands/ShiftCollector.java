@@ -20,6 +20,7 @@ public class ShiftCollector extends InstantCommand {
     // Called once when the command executes
     protected void initialize() 
     {
+    	RobotMap.collectorInHighGear = shiftVal;
     	RobotMap.intake.shift(shiftVal);
     }
 }

@@ -51,6 +51,8 @@ public class AutoMotion extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
+    	if(t.get() == 0)
+    		t.start();
     	SmartDashboard.putBoolean("isRunningTeleMotion", true);
     	SmartDashboard.putNumber("doneCounter", doneCounter);
     }
@@ -68,6 +70,7 @@ public class AutoMotion extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	t.reset();
     	new DriveOff();
     }
 
@@ -75,6 +78,7 @@ public class AutoMotion extends Command {
     // subsystems is scheduled to run
     protected void interrupted() 
     {
+    	t.reset();
     	System.out.println("interupted");
     }
 }

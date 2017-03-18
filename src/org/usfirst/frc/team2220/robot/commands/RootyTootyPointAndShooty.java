@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RootyTootyPointAndShooty extends Command {
 
 	double meterPower = -1.0;
-	double shooterPower = 0.7;
+	double shooterPower = 0.8;
 	Timer startTimer;
 	double highRumble = 1.0;
 	double lowRumble = 0.25;

@@ -12,12 +12,15 @@ public class AutoCenterGear extends CommandGroup {
 	double turnSpeed = 600;
 	double turnAccel = 600;
 	//8 rotations = 2 feet
-	double distance = 38;
+	double distance = 34.7; //34.7???
     public AutoCenterGear() 
     {
+    	addSequential(new ShiftDrivetrain(false));
     	addSequential(new AutoMotion(distance, distance, driveAccel, driveSpeed, 5));
+    	
     	addSequential(new ShiftCollector(true));
-    	addSequential(new Delay(3));
+    	addSequential(new Delay(2));
+    	addSequential(new AutoMotion(-4, -4, driveAccel, driveSpeed, 5));
     	addSequential(new ShiftCollector(false));
         // Add Commands here:
         // e.g. addSequential(new Command1());

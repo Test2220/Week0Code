@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
 /**
  * Central robot processing
  */
-public class Robot extends IterativeRobot {
+public class Robot extends IterativeRobot
+{
 
 	SendableChooser<Command> autoChooser;
 	Command autoCommand;
@@ -26,11 +26,11 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	@Override
-	public void robotInit() 
+	public void robotInit()
 	{
 		RobotMap.init();
 		OI.init();
-		
+
 		autoChooser = new SendableChooser<>();
 		autoChooser.addDefault("do nothing", new Delay(10));
 		autoChooser.addObject("Center Gear", new AutoCenterGear());
@@ -39,7 +39,7 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Blue Hopper", new AutoBlueHopper());
 		autoChooser.addObject("Blue Shoot'n'Gear", new AutoBlueShootAndGear());
 		autoChooser.addObject("Baseline", new AutoBaseline());
-		
+
 		SmartDashboard.putData("Auto Chooser", autoChooser);
 	}
 
@@ -47,27 +47,27 @@ public class Robot extends IterativeRobot {
 	 * This function is called once each time the robot enters Disabled mode.
 	 */
 	@Override
-	public void disabledInit() 
+	public void disabledInit()
 	{
-		if(autoCommand != null)
+		if (autoCommand != null)
 			autoCommand.cancel();
 		Scheduler.getInstance().removeAll();
 	}
 
 	@Override
-	public void disabledPeriodic() {
-		if(autoCommand != null)
+	public void disabledPeriodic()
+	{
+		if (autoCommand != null)
 			autoCommand.cancel();
 		Scheduler.getInstance().removeAll();
-		
-		//if autochooser isn't on dashboard, keep trying
+
+		// if autochooser isn't on dashboard, keep trying
 		try
 		{
 			SmartDashboard.getData("Auto Chooser");
-		}
-		catch(Exception e)
+		} catch (Exception e)
 		{
-			if(autoChooser != null)
+			if (autoChooser != null)
 				SmartDashboard.putData("Auto Chooser", autoChooser);
 		}
 	}
@@ -76,15 +76,16 @@ public class Robot extends IterativeRobot {
 	 * Selects command by chooser or manual
 	 */
 	@Override
-	public void autonomousInit() 
+	public void autonomousInit()
 	{
 		try
 		{
-			autoCommand = (Command) autoChooser.getSelected(); //chooser
+			autoCommand = (Command) autoChooser.getSelected(); // chooser
 			autoCommand.start();
+		} catch (Exception e)
+		{
 		}
-		catch (Exception e) {}
-		//autoCommand = new AutoRightGear(); //manual
+		// autoCommand = new AutoRightGear(); //manual
 		//
 	}
 
@@ -92,49 +93,52 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during autonomous
 	 */
 	@Override
-	public void autonomousPeriodic() {
+	public void autonomousPeriodic()
+	{
 		Scheduler.getInstance().run();
-		
+
 		updateSmartDashboard();
 	}
 
 	@Override
-	public void teleopInit() 
+	public void teleopInit()
 	{
-		if(autoCommand != null)
+		if (autoCommand != null)
 			autoCommand.cancel();
-		Scheduler.getInstance().removeAll(); //clears commands every time teleop initialized
+		Scheduler.getInstance().removeAll(); // clears commands every time
+												// teleop initialized
 	}
 
 	/**
 	 * This function is called periodically during operator control
 	 */
 	@Override
-	public void teleopPeriodic() {
+	public void teleopPeriodic()
+	{
 		Scheduler.getInstance().run();
 
 		updateSmartDashboard();
 	}
-	
+
 	public void updateSmartDashboard()
 	{
 		printCount++;
-		if(printCount % 100 == 0)
+		if (printCount % 100 == 0)
 		{
 			SmartDashboard.putBoolean("DrivetrainGear", RobotMap.driveInHighGear);
-			SmartDashboard.putBoolean("CollectorGear",  RobotMap.collectorInHighGear);
+			SmartDashboard.putBoolean("CollectorGear", RobotMap.collectorInHighGear);
 			SmartDashboard.putNumber("rEnc", RobotMap.rDriveMaster.getEncPosition());
 			SmartDashboard.putNumber("lEnc", RobotMap.lDriveMaster.getEncPosition());
 		}
-		
-		
+
 	}
 
 	/**
 	 * This function is called periodically during test mode
 	 */
 	@Override
-	public void testPeriodic() {
+	public void testPeriodic()
+	{
 		LiveWindow.run();
 	}
 }

@@ -2,39 +2,27 @@ package org.usfirst.frc.team2220.robot.subsystems;
 
 import org.usfirst.frc.team2220.robot.OI;
 import org.usfirst.frc.team2220.robot.RobotMap;
-import org.usfirst.frc.team2220.robot.commands.RunIntake;
+import org.usfirst.frc.team2220.robot.commands.RunGearIntake;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
  */
-public class Intake extends Subsystem
+public class GearIntake extends Subsystem
 {
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
-	public void run(double val)
+	public void runJoysticks()
 	{
-		RobotMap.collectorMaster.set(val);
-	}
-
-	public void shift(boolean highGear)
-	{
-		if (highGear)
-		{
-			RobotMap.collectorShifter.set(Value.kForward);
-		} else
-		{
-			RobotMap.collectorShifter.set(Value.kReverse);
-		}
+		RobotMap.intakeMotor.set(RobotMap.deadzone(OI.manipulatorStick.getRawAxis(1), 0.15) * -1);
 	}
 
 	public void initDefaultCommand()
 	{
-		setDefaultCommand(new RunIntake(0.0));
+		setDefaultCommand(new RunGearIntake());
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 	}

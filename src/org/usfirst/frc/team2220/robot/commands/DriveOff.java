@@ -7,20 +7,22 @@ import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveOff extends InstantCommand {
+public class DriveOff extends InstantCommand
+{
 
-	public DriveOff() {
-        super();
-        requires(RobotMap.drive);
-    }
+	public DriveOff()
+	{
+		super();
+		requires(RobotMap.drive);
+	}
 
-    // Called once when the command executes
-    protected void initialize() 
-    {
-    	RobotMap.rDriveMaster.changeControlMode(TalonControlMode.PercentVbus);
-    	RobotMap.lDriveMaster.changeControlMode(TalonControlMode.PercentVbus);
-    	RobotMap.drive.stopMotors();
-    	SmartDashboard.putBoolean("isRunningTeleMotion", false);
-    }
+	// Called once when the command executes
+	protected void initialize()
+	{
+		RobotMap.rDriveMaster.changeControlMode(TalonControlMode.PercentVbus);
+		RobotMap.lDriveMaster.changeControlMode(TalonControlMode.PercentVbus);
+		RobotMap.drive.stopMotors();
+		SmartDashboard.putBoolean("isRunningTeleMotion", false);
+	}
 
 }

@@ -21,9 +21,10 @@ public class TankDrive extends Subsystem
 		rDriveMotorSetpoint = RobotMap.rDriveMaster.getPosition();
 		lDriveMotorSetpoint = RobotMap.lDriveMaster.getPosition();
 	}
-	
+
 	/**
 	 * motion profiling setters
+	 * 
 	 * @param x
 	 */
 
@@ -32,30 +33,33 @@ public class TankDrive extends Subsystem
 		setRCruiseVel(x);
 		setLCruiseVel(x);
 	}
+
 	public void setRCruiseVel(double x)
 	{
 		RobotMap.rDriveMaster.setMotionMagicCruiseVelocity(x);
 	}
+
 	public void setLCruiseVel(double x)
 	{
 		RobotMap.lDriveMaster.setMotionMagicCruiseVelocity(x);
 	}
-	
+
 	public void setBothAccel(double x)
 	{
 		setRAccel(x);
 		setLAccel(x);
 	}
+
 	public void setRAccel(double x)
 	{
 		RobotMap.rDriveMaster.setMotionMagicAcceleration(x);
 	}
+
 	public void setLAccel(double x)
 	{
 		RobotMap.lDriveMaster.setMotionMagicAcceleration(x);
 	}
-	
-	
+
 	// NEGATIVE FOR BACKWARDS
 	public void incrementRPosition(double x)
 	{
@@ -89,7 +93,7 @@ public class TankDrive extends Subsystem
 	{
 		RobotMap.rDriveMaster.set(rVal);
 		RobotMap.lDriveMaster.set(lVal);
-		//shift(RobotMap.driveInHighGear);
+		// shift(RobotMap.driveInHighGear);
 	}
 
 	public void shift(boolean highGear)
@@ -97,8 +101,7 @@ public class TankDrive extends Subsystem
 		if (highGear)
 		{
 			RobotMap.driveShifter.set(Value.kForward);
-		}
-		else
+		} else
 		{
 			RobotMap.driveShifter.set(Value.kReverse);
 		}
@@ -113,6 +116,6 @@ public class TankDrive extends Subsystem
 	@Override
 	protected void initDefaultCommand()
 	{
-		//no default command
+		// no default command
 	}
 }

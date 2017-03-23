@@ -15,52 +15,51 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 public class FBCameraMotion extends Command
 {
 
-	//double motorSetpointR = 0, motorSetpointL = 0; //initialVal
+	// double motorSetpointR = 0, motorSetpointL = 0; //initialVal
 	double prevMotorR = 0, prevMotorL = 0;
 	double allowableError = 10;
-	double prevCamVal = 0, camSetpoint = 60;//160
+	double prevCamVal = 0, camSetpoint = 60;// 160
 	double midpoint = 100000;
 	NetworkTable contourTable;
 	Timer t;
 	double endVal;
-	
-	public FBCameraMotion(double timeVal) 
+
+	public FBCameraMotion(double timeVal)
 	{
 		endVal = timeVal;
-        requires(RobotMap.drive);
-    }
+		requires(RobotMap.drive);
+	}
 
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{
 		t = new Timer();
-    	t.reset();
-    	t.start();
+		t.reset();
+		t.start();
 		RobotMap.rDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
-    	RobotMap.lDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
-    	
-    	RobotMap.drive.resetEncoderPos();
+		RobotMap.lDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
+
+		RobotMap.drive.resetEncoderPos();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
 		contourTable = NetworkTable.getTable("GRIP/contoursReport");
-		double[] centerX = contourTable.getNumberArray("centerX", new double[]{});
-		double[] area    = contourTable.getNumberArray("area", new double[]{});
+		double[] centerX = contourTable.getNumberArray("centerX", new double[] {});
+		double[] area = contourTable.getNumberArray("area", new double[] {});
 		System.out.println("Contour 1");
-		if(centerX.length >= 1 && area.length >= 1)
+		if (centerX.length >= 1 && area.length >= 1)
 		{
 			midpoint = centerX[0];
-				
+
 			System.out.println("midpoint = " + midpoint);
-		
+
 			double setpointChangeVal = 0.04;
-			if(midpoint > camSetpoint)
+			if (midpoint > camSetpoint)
 			{
 				RobotMap.drive.incrementAllPos(-setpointChangeVal);
-			}
-			else if(midpoint < camSetpoint)
+			} else if (midpoint < camSetpoint)
 			{
 				RobotMap.drive.incrementAllPos(setpointChangeVal);
 			}
@@ -70,7 +69,7 @@ public class FBCameraMotion extends Command
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished()
 	{
-		if(t.get() > endVal)
+		if (t.get() > endVal)
 			return true;
 		return Math.abs(camSetpoint - midpoint) < allowableError;
 	}
@@ -79,7 +78,7 @@ public class FBCameraMotion extends Command
 	protected void end()
 	{
 		new DriveOff();
-	//	RobotMap.drive.resetEncoderPos();
+		// RobotMap.drive.resetEncoderPos();
 	}
 
 	// Called when another command which requires one or more of the same

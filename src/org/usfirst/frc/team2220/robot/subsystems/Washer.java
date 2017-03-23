@@ -9,25 +9,26 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class Washer extends Subsystem {
+public class Washer extends Subsystem
+{
 
 	public void runWasher(double pow)
-    {
-    	RobotMap.washer.set(pow);
-    }
-	
+	{
+		RobotMap.washer.set(pow);
+	}
+
 	public void runJoysticks()
 	{
-		RobotMap.washer.set( RobotMap.deadzone( OI.manipulatorStick.getRawAxis(5), 0.15 ) * -1  );
+		RobotMap.washer.set(RobotMap.deadzone(OI.manipulatorStick.getRawAxis(5), 0.15) * -1);
 	}
-    
-    public void stop()
-    {
-    	RobotMap.washer.set(0);
-    }
 
-    public void initDefaultCommand() {
-        setDefaultCommand(new WasherJoystick());
-    }
+	public void stop()
+	{
+		RobotMap.washer.set(0);
+	}
+
+	public void initDefaultCommand()
+	{
+		setDefaultCommand(new WasherJoystick());
+	}
 }
-

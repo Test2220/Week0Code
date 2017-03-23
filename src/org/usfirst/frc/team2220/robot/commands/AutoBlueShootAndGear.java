@@ -24,7 +24,7 @@ public class AutoBlueShootAndGear extends CommandGroup {
     	*/
     	addSequential(new Delay(2));
     	addSequential(new AutoMotion(-42.3, -42.3, driveAccel, driveSpeed, 5));
-    	addSequential(new AutoMotion(-3.625, 3.625, turnAccel, turnSpeed, 4));
+    	addSequential(new AutoMotion(-3.625, 3.625, turnAccel, turnSpeed, 3));
     	addSequential(new AutoShoot(6));
     	
     	/*

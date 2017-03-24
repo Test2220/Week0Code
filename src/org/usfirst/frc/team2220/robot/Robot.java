@@ -36,8 +36,8 @@ public class Robot extends IterativeRobot
 		autoChooser.addObject("Center Gear", new AutoCenterGear());
 		autoChooser.addObject("Left Gear", new AutoLeftGear());
 		autoChooser.addObject("Right Gear", new AutoRightGear());
-		autoChooser.addObject("Blue Hopper", new AutoBlueHopper());
-		autoChooser.addObject("Blue Shoot'n'Gear", new AutoBlueShootAndGear());
+		autoChooser.addObject("Red Shoot And Gear", new AutoRedShootAndGear());
+		autoChooser.addObject("WR", new AutoWR());
 		autoChooser.addObject("Baseline", new AutoBaseline());
 
 		SmartDashboard.putData("Auto Chooser", autoChooser);

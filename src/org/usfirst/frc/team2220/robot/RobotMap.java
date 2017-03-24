@@ -155,4 +155,16 @@ public class RobotMap
 		lDriveMaster.setMotionMagicCruiseVelocity(cruiseVel); // RPM
 
 	}
+
+	public static double inchesToEncRot(double input)
+	{
+		input = input / 23.75; // wheel rotations
+		input = input * 8; // encoder revolutions
+		return input;
+	}
+
+	public static double feetToEncRot(double input)
+	{
+		return inchesToEncRot(input / 12);
+	}
 }

@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoBlueShootAndGear extends CommandGroup
+public class AutoWR extends CommandGroup
 {
 
 	double driveSpeed = 1500;
@@ -14,7 +14,7 @@ public class AutoBlueShootAndGear extends CommandGroup
 	double turnAccel = 600;
 	double distance = 38;
 
-	public AutoBlueShootAndGear()
+	public AutoWR()
 	{
 		// Shoot, turn and cross line
 		// OPEN / CLOSE GEAR
@@ -25,7 +25,7 @@ public class AutoBlueShootAndGear extends CommandGroup
 		 */
 		addSequential(new Delay(2));
 		addSequential(new AutoMotion(-42.3, -42.3, driveAccel, driveSpeed, 5));
-		addSequential(new AutoMotion(-3.625, 3.625, turnAccel, turnSpeed, 3));
+		addSequential(new AutoMotion(-3.625, 3.625, turnAccel, turnSpeed, 3)); // 45
 		addSequential(new AutoShoot(6));
 
 		/*

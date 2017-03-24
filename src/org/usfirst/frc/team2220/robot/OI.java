@@ -72,8 +72,10 @@ public class OI
 		// Manipulator//
 		///////////////
 
-		lTriggerM.whileActive(new RunIntake(1.0));
-		// rTriggerM.whileActive(new RunIntake(-1.0)); //doing this could break
+		// lTriggerM.whileActive(new RunIntake(1.0));// this could break
+		lTriggerM.whileActive(new RunIntake(-1.0)); // doing this could break <-
+													// this wont//prev rTrigger
+													// but disabledde v
 		// ratchet
 		lBumperM.whileHeld(new RunWasher(1.0));
 		rBumperM.whileHeld(new RunWasher(-1.0));

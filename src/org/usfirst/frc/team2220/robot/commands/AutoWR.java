@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2220.robot.commands;
 
+import org.usfirst.frc.team2220.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -12,7 +14,7 @@ public class AutoWR extends CommandGroup
 	double driveAccel = 1500;
 	double turnSpeed = 600;
 	double turnAccel = 600;
-	double distance = 38;
+	double distance = -42.3 + RobotMap.inchesToEncRot(24);
 
 	public AutoWR()
 	{
@@ -24,7 +26,8 @@ public class AutoWR extends CommandGroup
 		 * addSequential(new AutoShoot(6)); //addSeuqntial has built-in timeout
 		 */
 		addSequential(new Delay(2));
-		addSequential(new AutoMotion(-42.3, -42.3, driveAccel, driveSpeed, 5));
+		addSequential(new AutoMotion(-42.3 - RobotMap.inchesToEncRot(24), -42.3 - RobotMap.inchesToEncRot(24),
+				driveAccel, driveSpeed, 5));
 		addSequential(new AutoMotion(-3.625, 3.625, turnAccel, turnSpeed, 3)); // 45
 		addSequential(new AutoShoot(6));
 

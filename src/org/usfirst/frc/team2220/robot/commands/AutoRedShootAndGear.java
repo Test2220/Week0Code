@@ -19,6 +19,8 @@ public class AutoRedShootAndGear extends CommandGroup
 	{
 		addSequential(new ShiftDrivetrain(false));
 		addSequential(new AutoShoot(5));
+		addSequential(
+				new AutoMotion(RobotMap.inchesToEncRot(-2), RobotMap.inchesToEncRot(2), driveAccel, driveSpeed, 5));
 		addSequential(new AutoMotion(RobotMap.inchesToEncRot(114.5), RobotMap.inchesToEncRot(114.5), driveAccel,
 				driveSpeed, 5));
 

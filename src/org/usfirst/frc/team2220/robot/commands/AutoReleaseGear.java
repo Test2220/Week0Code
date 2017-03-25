@@ -15,10 +15,10 @@ public class AutoReleaseGear extends CommandGroup
 
 	public AutoReleaseGear()
 	{
-		addSequential(new ShiftCollector(true));
+		addSequential(new ShiftCollector(true)); // up
 		// addSequential(new Delay(2));
 		addSequential(new AutoMotion(-4, -4, driveAccel, driveSpeed, 2));
-		addSequential(new ShiftCollector(false));
+		addSequential(new ShiftCollector(false)); // down
 
 		// Add Commands here:
 		// e.g. addSequential(new Command1());

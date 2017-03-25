@@ -47,8 +47,7 @@ public class OI
 	public static final int LTRIGGER = 2, RTRIGGER = 3;
 	private static XboxTrigger lTriggerM = new XboxTrigger(manipulatorStick, 2);
 
-	// private static XboxTrigger rTriggerM = new XboxTrigger(manipulatorStick,
-	// 3);
+	private static XboxTrigger rTriggerM = new XboxTrigger(manipulatorStick, 3);
 
 	public static void init()
 	{
@@ -72,7 +71,7 @@ public class OI
 		// Manipulator//
 		///////////////
 
-		// lTriggerM.whileActive(new RunIntake(1.0));// this could break
+		rTriggerM.whileActive(new AccelerateClimber(1.0));// this could break
 		lTriggerM.whileActive(new RunIntake(-1.0)); // doing this could break <-
 													// this wont//prev rTrigger
 													// but disabledde v

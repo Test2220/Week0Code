@@ -19,8 +19,7 @@ public class AutoBlueShoot extends CommandGroup
 	{
 		addSequential(new ShiftDrivetrain(false));
 		addSequential(new AutoShoot(8));
-		addSequential(new AutoMotion(RobotMap.inchesToEncRot(15.5), RobotMap.inchesToEncRot(-15.5), driveAccel,
-				driveSpeed, 2));
-		addSequential(new AutoMotion(36.5, 36.5, driveAccel, driveSpeed, 5));
+		addSequential(new AutoMotion(RobotMap.inchesToEncRot(15.5), RobotMap.inchesToEncRot(-15.5), driveAccel, driveSpeed), 2);
+		addSequential(new AutoMotion(36.5, 36.5, driveAccel, driveSpeed), 5);
 	}
 }

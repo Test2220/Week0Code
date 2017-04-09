@@ -18,14 +18,10 @@ public class AutoRightGear extends CommandGroup
 	public AutoRightGear()
 	{
 		addSequential(new ShiftDrivetrain(false));
-		addSequential(
-				new AutoMotion(RobotMap.inchesToEncRot(20), RobotMap.inchesToEncRot(20), driveAccel, driveSpeed, 2));
-		addSequential(new AutoMotion(3.625, -3.625, turnAccel, turnSpeed, 4)); // 45
-																				// degrees
-																				// CCW
+		addSequential(new AutoMotion(RobotMap.inchesToEncRot(20), RobotMap.inchesToEncRot(20), driveAccel, driveSpeed), 2);
+		addSequential(new AutoMotion(3.625, -3.625, turnAccel, turnSpeed), 4); // 45 degrees CCW
 
-		addSequential(new AutoMotion(RobotMap.inchesToEncRot(104.6), RobotMap.inchesToEncRot(104.6), driveAccel,
-				driveSpeed, 5));
+		addSequential(new AutoMotion(RobotMap.inchesToEncRot(104.6), RobotMap.inchesToEncRot(104.6), driveAccel, driveSpeed), 5);
 
 		addSequential(new AutoReleaseGear(), 4);
 	}

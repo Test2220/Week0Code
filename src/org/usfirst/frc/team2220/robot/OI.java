@@ -16,38 +16,54 @@ public class OI
 {
 	public static XboxController driverStick = new XboxController(0);
 	public static XboxController manipulatorStick = new XboxController(1);
-	public static int lAxis = 1;
-	public static int rAxis = 5;
 	public static int motorValueOff = 0;
+
+	//if i have these constants should i rethink naming the actual buttons and triggers?
+	//maybe make my own class that pre-declares all of these per xbox controller, but still allows binding to buttons?
+	//talk to Tim TODO
+
+	//Axis constants
+	public static final int LEFT_Y_AXIS = 1;
+	public static final int RIGHT_Y_AXIS = 5;
+
+	public static final int LEFT_TRIGGER = 2;
+	public static final int RIGHT_TRIGGER = 3;
+
+	//Button Constants
+	public static final int A_BUTTON = 1;
+	public static final int B_BUTTON = 2;
+	public static final int X_BUTTON = 3;
+	public static final int Y_BUTTON = 4;
+	public static final int LEFT_BUMPER = 5;
+	public static final int RIGHT_BUMPER = 6;
 
 	/**
 	 * DRIVER TRIGGERS
 	 */
 
-	private static Button aButtonD = new JoystickButton(driverStick, 1);
-	private static Button bButtonD = new JoystickButton(driverStick, 2);
-	private static Button xButtonD = new JoystickButton(driverStick, 3);
-	private static Button yButtonD = new JoystickButton(driverStick, 4);
+	private static Button aButtonD = new JoystickButton(driverStick, A_BUTTON);
+	private static Button bButtonD = new JoystickButton(driverStick, B_BUTTON);
+	private static Button xButtonD = new JoystickButton(driverStick, X_BUTTON);
+	private static Button yButtonD = new JoystickButton(driverStick, Y_BUTTON);
 
-	private static Button lBumperD = new JoystickButton(manipulatorStick, 5);
-	private static Button rBumperD = new JoystickButton(manipulatorStick, 6);
+	private static Button lBumperD = new JoystickButton(manipulatorStick, LEFT_BUMPER);
+	private static Button rBumperD = new JoystickButton(manipulatorStick, RIGHT_BUMPER);
 
 	private static DriveTrigger isDriving = new DriveTrigger();
 
 	/**
 	 * MANIPULATOR TRIGGERS
 	 */
-	private static Button aButtonM = new JoystickButton(manipulatorStick, 1);
-	private static Button bButtonM = new JoystickButton(manipulatorStick, 2);
-	private static Button xButtonM = new JoystickButton(manipulatorStick, 3);
-	private static Button yButtonM = new JoystickButton(manipulatorStick, 4);
-	private static Button lBumperM = new JoystickButton(manipulatorStick, 5);
-	private static Button rBumperM = new JoystickButton(manipulatorStick, 6);
+	private static Button aButtonM = new JoystickButton(manipulatorStick, A_BUTTON);
+	private static Button bButtonM = new JoystickButton(manipulatorStick, B_BUTTON);
+	private static Button xButtonM = new JoystickButton(manipulatorStick, X_BUTTON);
+	private static Button yButtonM = new JoystickButton(manipulatorStick, Y_BUTTON);
+	private static Button lBumperM = new JoystickButton(manipulatorStick, LEFT_BUMPER);
+	private static Button rBumperM = new JoystickButton(manipulatorStick, RIGHT_BUMPER);
 
-	public static final int LTRIGGER = 2, RTRIGGER = 3;
-	private static XboxTrigger lTriggerM = new XboxTrigger(manipulatorStick, 2);
+	private static XboxTrigger lTriggerM = new XboxTrigger(manipulatorStick, LEFT_TRIGGER);
 
-	private static XboxTrigger rTriggerM = new XboxTrigger(manipulatorStick, 3);
+	private static XboxTrigger rTriggerM = new XboxTrigger(manipulatorStick, RIGHT_TRIGGER);
 
 	public static void init()
 	{
@@ -56,10 +72,8 @@ public class OI
 		//////////
 
 		yButtonD.whenPressed(new TeleMotion(2.5, 2.5, 500, 1000));
-		/*
-		 * yButtonD.whenPressed(new TeleMotion(56, 56, 500, 1000)); //go forward
-		 * xButtonD.whenPressed(new TeleMotion(7.25, -7.25, 100, 500)); //turn
-		 */
+		/* yButtonD.whenPressed(new TeleMotion(56, 56, 500, 1000)); //go forward
+		 * xButtonD.whenPressed(new TeleMotion(7.25, -7.25, 100, 500)); //turn */
 
 		aButtonD.whenPressed(new ShiftDrivetrain(true));
 		xButtonD.whenPressed(new ShiftDrivetrain(false));
@@ -68,20 +82,18 @@ public class OI
 		isDriving.whenInactive(new DriveOff());
 
 		///////////////
-		// Manipulator//
+		//Manipulator//
 		///////////////
 
-		rTriggerM.whileActive(new AccelerateClimber(1.0));// this could break
-		lTriggerM.whileActive(new RunIntake(-1.0)); // doing this could break <-
-													// this wont//prev rTrigger
-													// but disabledde v
-		// ratchet
+		rTriggerM.whileActive(new AccelerateClimber(1.0)); //this is positive, flips in command
+		lTriggerM.whileActive(new RunClimber(-1.0)); //this is negative, doesn't flip in command
+
 		lBumperM.whileHeld(new RunWasher(1.0));
 		rBumperM.whileHeld(new RunWasher(-1.0));
 		aButtonM.whenPressed(new RootyTootyPointAndShooty());
 		xButtonM.whenPressed(new StopTheFuels());
-		yButtonM.whenPressed(new ShiftCollector(true));
-		bButtonM.whenPressed(new ShiftCollector(false));
+		yButtonM.whenPressed(new ShiftClimber(true));
+		bButtonM.whenPressed(new ShiftClimber(false));
 
 	}
 }

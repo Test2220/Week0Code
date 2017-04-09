@@ -9,6 +9,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class FlameThrower extends Subsystem
 {
+	public static FlameThrower instance_ = new FlameThrower();
+
+	public static FlameThrower getInstance()
+	{
+		return instance_;
+	}
 
 	public void runShooter(double pow)
 	{

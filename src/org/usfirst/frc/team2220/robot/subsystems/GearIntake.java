@@ -11,19 +11,21 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class GearIntake extends Subsystem
 {
+	public static GearIntake instance_ = new GearIntake();
 
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
+	public static GearIntake getInstance()
+	{
+		return instance_;
+	}
 
 	public void runJoysticks()
 	{
-		RobotMap.intakeMotor.set(RobotMap.deadzone(OI.manipulatorStick.getRawAxis(1), 0.15) * -1);
+		RobotMap.gearIntakeR.set(RobotMap.deadzone(OI.manipulatorStick.getRawAxis(1), 0.15) * -1.0);
+		RobotMap.gearIntakeL.set(RobotMap.deadzone(OI.manipulatorStick.getRawAxis(1), 0.15));
 	}
 
 	public void initDefaultCommand()
 	{
 		setDefaultCommand(new RunGearIntake());
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
 	}
 }

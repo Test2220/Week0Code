@@ -2,6 +2,7 @@ package org.usfirst.frc.team2220.robot.commands;
 
 import org.usfirst.frc.team2220.robot.OI;
 import org.usfirst.frc.team2220.robot.RobotMap;
+import org.usfirst.frc.team2220.robot.subsystems.TankDrive;
 
 import com.ctre.CANTalon.TalonControlMode;
 
@@ -15,7 +16,7 @@ public class DriveWithControllers extends Command
 
 	public DriveWithControllers()
 	{
-		requires(RobotMap.drive);
+		requires(TankDrive.getInstance());
 	}
 
 	// Called just before this Command runs the first time
@@ -29,11 +30,11 @@ public class DriveWithControllers extends Command
 	protected void execute()
 	{
 		double scale = 1.0;
-		double rVal = OI.driverStick.getRawAxis(OI.rAxis) * scale * -1;
-		double lVal = OI.driverStick.getRawAxis(OI.lAxis) * scale;
-		RobotMap.drive.controllerTank(rVal, lVal); // method on instantiation of
-													// TankDrive subclass of
-													// subsystem
+		double rVal = OI.driverStick.getRawAxis(OI.RIGHT_Y_AXIS) * scale * -1;
+		double lVal = OI.driverStick.getRawAxis(OI.LEFT_Y_AXIS) * scale;
+		TankDrive.getInstance().controllerTank(rVal, lVal); // method on instantiation of
+		// TankDrive subclass of
+		// subsystem
 
 	}
 

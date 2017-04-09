@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2220.robot.commands;
 
-import org.usfirst.frc.team2220.robot.RobotMap;
+import org.usfirst.frc.team2220.robot.subsystems.Washer;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -16,7 +16,7 @@ public class RunWasher extends Command
 	{
 		power = pow;
 		// Use requires() here to declare subsystem dependencies
-		requires(RobotMap.washerSubsystem);
+		requires(Washer.getInstance());
 	}
 
 	// Called just before this Command runs the first time
@@ -28,7 +28,7 @@ public class RunWasher extends Command
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
-		RobotMap.washerSubsystem.runWasher(power);
+		Washer.getInstance().runWasher(power);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

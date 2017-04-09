@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2220.robot.commands;
 
-import org.usfirst.frc.team2220.robot.RobotMap;
+import org.usfirst.frc.team2220.robot.subsystems.Climber;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -8,17 +8,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class RunIntake extends Command
+public class RunClimber extends Command
 {
 
 	double runVal;
 
-	public RunIntake(double inVal)
+	public RunClimber(double inVal)
 	{
 		runVal = inVal;
-		requires(RobotMap.intake);
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
+		requires(Climber.getInstance());
 	}
 
 	// Called just before this Command runs the first time
@@ -29,7 +27,7 @@ public class RunIntake extends Command
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
-		RobotMap.intake.run(runVal);
+		Climber.getInstance().run(runVal);
 		SmartDashboard.putNumber("collectorSpeed", runVal);
 	}
 

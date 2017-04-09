@@ -1,13 +1,14 @@
 package org.usfirst.frc.team2220.robot.commands;
 
 import org.usfirst.frc.team2220.robot.RobotMap;
+import org.usfirst.frc.team2220.robot.subsystems.TankDrive;
 
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -27,7 +28,7 @@ public class FBCameraMotion extends Command
 	public FBCameraMotion(double timeVal)
 	{
 		endVal = timeVal;
-		requires(RobotMap.drive);
+		requires(TankDrive.getInstance());
 	}
 
 	// Called just before this Command runs the first time
@@ -39,7 +40,7 @@ public class FBCameraMotion extends Command
 		RobotMap.rDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
 		RobotMap.lDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
 
-		RobotMap.drive.resetEncoderPos();
+		TankDrive.getInstance().resetEncoderPos();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -58,10 +59,11 @@ public class FBCameraMotion extends Command
 			double setpointChangeVal = 0.04;
 			if (midpoint > camSetpoint)
 			{
-				RobotMap.drive.incrementAllPos(-setpointChangeVal);
-			} else if (midpoint < camSetpoint)
+				TankDrive.getInstance().incrementAllPos(-setpointChangeVal);
+			}
+			else if (midpoint < camSetpoint)
 			{
-				RobotMap.drive.incrementAllPos(setpointChangeVal);
+				TankDrive.getInstance().incrementAllPos(setpointChangeVal);
 			}
 		}
 	}

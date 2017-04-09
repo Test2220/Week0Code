@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2220.robot.commands;
 
-import org.usfirst.frc.team2220.robot.RobotMap;
+import org.usfirst.frc.team2220.robot.subsystems.Climber;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -17,7 +17,7 @@ public class AccelerateClimber extends Command
 
 	public AccelerateClimber(double accelTime)
 	{
-		requires(RobotMap.intake);
+		requires(Climber.getInstance());
 		aTime = accelTime;
 	}
 
@@ -34,10 +34,11 @@ public class AccelerateClimber extends Command
 	{
 		if (t.get() < aTime)
 		{
-			RobotMap.intake.run((t.get() / aTime) * -1.0);
-		} else
+			Climber.getInstance().run((t.get() / aTime) * -1.0);
+		}
+		else
 		{
-			RobotMap.intake.run(-1.0);
+			Climber.getInstance().run(-1.0);
 		}
 	}
 
@@ -50,13 +51,13 @@ public class AccelerateClimber extends Command
 	// Called once after isFinished returns true
 	protected void end()
 	{
-		RobotMap.intake.run(0);
+		Climber.getInstance().run(0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted()
 	{
-		RobotMap.intake.run(0);
+		Climber.getInstance().run(0);
 	}
 }

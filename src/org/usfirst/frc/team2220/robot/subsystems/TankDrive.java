@@ -10,8 +10,14 @@ import org.usfirst.frc.team2220.robot.RobotMap;
  */
 public class TankDrive extends Subsystem
 {
+	public static TankDrive instance_ = new TankDrive();
+	public boolean shiftState;
 
-	// public static double scale = 1;
+	public static TankDrive getInstance()
+	{
+		return instance_;
+	}
+
 	public static double rDriveMotorSetpoint = 0;
 	public static double lDriveMotorSetpoint = 0;
 	public static final double ALLOWED_ERROR = 15;
@@ -98,10 +104,12 @@ public class TankDrive extends Subsystem
 
 	public void shift(boolean highGear)
 	{
+		shiftState = highGear;
 		if (highGear)
 		{
 			RobotMap.driveShifter.set(Value.kForward);
-		} else
+		}
+		else
 		{
 			RobotMap.driveShifter.set(Value.kReverse);
 		}

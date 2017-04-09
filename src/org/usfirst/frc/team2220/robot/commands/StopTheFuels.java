@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2220.robot.commands;
 
 import org.usfirst.frc.team2220.robot.OI;
-import org.usfirst.frc.team2220.robot.RobotMap;
+import org.usfirst.frc.team2220.robot.subsystems.FlameThrower;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
@@ -17,7 +17,7 @@ public class StopTheFuels extends Command
 	public StopTheFuels()
 	{
 		// Use requires() here to declare subsystem dependencies
-		requires(RobotMap.flamethrower);
+		requires(FlameThrower.getInstance());
 	}
 
 	// Called just before this Command runs the first time
@@ -28,8 +28,8 @@ public class StopTheFuels extends Command
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
-		RobotMap.flamethrower.stopMeter();
-		RobotMap.flamethrower.stopShooter();
+		FlameThrower.getInstance().stopMeter();
+		FlameThrower.getInstance().stopShooter();
 		OI.manipulatorStick.setRumble(RumbleType.kRightRumble, 0.0);
 		OI.manipulatorStick.setRumble(RumbleType.kLeftRumble, 0.0);
 	}

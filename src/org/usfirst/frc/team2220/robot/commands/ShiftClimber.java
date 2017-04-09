@@ -1,28 +1,27 @@
 package org.usfirst.frc.team2220.robot.commands;
 
-import org.usfirst.frc.team2220.robot.RobotMap;
+import org.usfirst.frc.team2220.robot.subsystems.Climber;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
 
 /**
  *
  */
-public class ShiftCollector extends InstantCommand
+public class ShiftClimber extends InstantCommand
 {
 
 	boolean shiftVal;
 
-	public ShiftCollector(boolean shiftVal)
+	public ShiftClimber(boolean shiftVal)
 	{
 		super();
-		requires(RobotMap.intake);
+		requires(Climber.getInstance());
 		this.shiftVal = shiftVal;
 	}
 
 	// Called once when the command executes
 	protected void initialize()
 	{
-		RobotMap.collectorInHighGear = shiftVal;
-		RobotMap.intake.shift(shiftVal);
+		Climber.getInstance().shift(shiftVal);
 	}
 }

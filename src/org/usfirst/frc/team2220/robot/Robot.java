@@ -2,10 +2,11 @@
 package org.usfirst.frc.team2220.robot;
 
 import org.usfirst.frc.team2220.robot.commands.*;
+import org.usfirst.frc.team2220.robot.subsystems.Climber;
+import org.usfirst.frc.team2220.robot.subsystems.TankDrive;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -37,7 +38,7 @@ public class Robot extends IterativeRobot
 		autoChooser.addObject("Left Gear", new AutoLeftGear());
 		autoChooser.addObject("Right Gear", new AutoRightGear());
 		autoChooser.addObject("Red Shoot And Gear", new AutoRedShootAndGear());
-		autoChooser.addObject("WR", new AutoWR());
+		autoChooser.addObject("WR", new AutoDriveFromMidlineAndShoot());
 		autoChooser.addObject("Baseline", new AutoBaseline());
 		autoChooser.addObject("Blue Shoot", new AutoBlueShoot());
 		autoChooser.addObject("Red Shoot", new AutoRedShoot());
@@ -67,7 +68,8 @@ public class Robot extends IterativeRobot
 		try
 		{
 			SmartDashboard.getData("Auto Chooser");
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			if (autoChooser != null)
 				SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -84,7 +86,8 @@ public class Robot extends IterativeRobot
 		{
 			autoCommand = (Command) autoChooser.getSelected(); // chooser
 			autoCommand.start();
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 		}
 		// autoCommand = new AutoRightGear(); //manual
@@ -127,8 +130,8 @@ public class Robot extends IterativeRobot
 		printCount++;
 		if (printCount % 100 == 0)
 		{
-			SmartDashboard.putBoolean("DrivetrainGear", RobotMap.driveInHighGear);
-			SmartDashboard.putBoolean("CollectorGear", RobotMap.collectorInHighGear);
+			SmartDashboard.putBoolean("DrivetrainGear", TankDrive.getInstance().shiftState);
+			SmartDashboard.putBoolean("CollectorGear", Climber.getInstance().shiftState);
 			SmartDashboard.putNumber("rEnc", RobotMap.rDriveMaster.getEncPosition());
 			SmartDashboard.putNumber("lEnc", RobotMap.lDriveMaster.getEncPosition());
 		}

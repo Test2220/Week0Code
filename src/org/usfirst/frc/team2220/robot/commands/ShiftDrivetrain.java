@@ -1,8 +1,7 @@
 package org.usfirst.frc.team2220.robot.commands;
 
-import org.usfirst.frc.team2220.robot.RobotMap;
+import org.usfirst.frc.team2220.robot.subsystems.TankDrive;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 
 /**
@@ -23,6 +22,6 @@ public class ShiftDrivetrain extends InstantCommand
 	// Called after the command is started... every time.
 	protected void initialize()
 	{
-		RobotMap.drive.shift(shiftVal);
+		TankDrive.getInstance().shift(shiftVal);
 	}
 }

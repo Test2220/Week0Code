@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2220.robot.commands;
 
 import org.usfirst.frc.team2220.robot.RobotMap;
+import org.usfirst.frc.team2220.robot.subsystems.TankDrive;
 
 import com.ctre.CANTalon.TalonControlMode;
 
@@ -19,13 +20,14 @@ public class CurveMotion extends Command
 	// theta in degrees, radii in feet, time in seconds
 	public CurveMotion(double theta, double radius, boolean turnRight, double accelTime, double totalTime)
 	{
-		requires(RobotMap.drive);
+		requires(TankDrive.getInstance());
 
 		if (turnRight) // left val includes robot wheel distance
 		{
 			rDist = (theta / 360) * 2 * Math.PI * radius;
 			lDist = (theta / 360) * 2 * Math.PI * (radius + WHEEL_SPACING);
-		} else
+		}
+		else
 		{
 			rDist = (theta / 360) * 2 * Math.PI * (radius + WHEEL_SPACING);
 			lDist = (theta / 360) * 2 * Math.PI * radius;
@@ -46,15 +48,15 @@ public class CurveMotion extends Command
 		RobotMap.rDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
 		RobotMap.lDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
 
-		RobotMap.drive.setRCruiseVel(rCruiseVel);
-		RobotMap.drive.setLCruiseVel(lCruiseVel);
-		RobotMap.drive.setRAccel(rAccel);
-		RobotMap.drive.setLAccel(lAccel);
+		TankDrive.getInstance().setRCruiseVel(rCruiseVel);
+		TankDrive.getInstance().setLCruiseVel(lCruiseVel);
+		TankDrive.getInstance().setRAccel(rAccel);
+		TankDrive.getInstance().setLAccel(lAccel);
 
-		RobotMap.drive.resetEncoderPos();
+		TankDrive.getInstance().resetEncoderPos();
 
-		RobotMap.drive.incrementRPosition(rDist);
-		RobotMap.drive.incrementLPosition(lDist);
+		TankDrive.getInstance().incrementRPosition(rDist);
+		TankDrive.getInstance().incrementLPosition(lDist);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -64,7 +66,7 @@ public class CurveMotion extends Command
 
 	protected boolean isFinished()
 	{
-		return RobotMap.drive.hasHitRSetpoint() && RobotMap.drive.hasHitLSetpoint();
+		return TankDrive.getInstance().hasHitRSetpoint() && TankDrive.getInstance().hasHitLSetpoint();
 	}
 
 	// Called once after isFinished returns true

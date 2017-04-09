@@ -18,6 +18,6 @@ public class AutoBaseline extends CommandGroup
 	public AutoBaseline()
 	{
 		addSequential(new ShiftDrivetrain(false));
-		addSequential(new AutoMotion(distance, distance, driveAccel, driveSpeed, 5));
+		addSequential(new AutoMotion(distance, distance, driveAccel, driveSpeed), 5);
 	}
 }

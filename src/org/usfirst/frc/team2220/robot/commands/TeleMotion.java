@@ -1,10 +1,11 @@
 package org.usfirst.frc.team2220.robot.commands;
 
 import org.usfirst.frc.team2220.robot.RobotMap;
+import org.usfirst.frc.team2220.robot.subsystems.TankDrive;
 
 import com.ctre.CANTalon.TalonControlMode;
 
-//import edu.wpi.first.wpilibj.Timer;
+// import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -22,7 +23,7 @@ public class TeleMotion extends Command
 	// 8enc:1wheel rotation
 	public TeleMotion(double r, double l, double accel, double cVel)
 	{
-		requires(RobotMap.drive);
+		requires(TankDrive.getInstance());
 		rVal = r;
 		lVal = l;
 
@@ -36,13 +37,13 @@ public class TeleMotion extends Command
 	{
 		RobotMap.rDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
 		RobotMap.lDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
-		RobotMap.drive.setBothAccel(a);
-		RobotMap.drive.setBothCruiseVel(v);
+		TankDrive.getInstance().setBothAccel(a);
+		TankDrive.getInstance().setBothCruiseVel(v);
 
-		RobotMap.drive.resetEncoderPos();
+		TankDrive.getInstance().resetEncoderPos();
 
-		RobotMap.drive.incrementRPosition(rVal);
-		RobotMap.drive.incrementLPosition(lVal);
+		TankDrive.getInstance().incrementRPosition(rVal);
+		TankDrive.getInstance().incrementLPosition(lVal);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -54,7 +55,7 @@ public class TeleMotion extends Command
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished()
 	{
-		return RobotMap.drive.hasHitRSetpoint() && RobotMap.drive.hasHitLSetpoint();
+		return TankDrive.getInstance().hasHitRSetpoint() && TankDrive.getInstance().hasHitLSetpoint();
 	}
 
 	// Called once after isFinished returns true

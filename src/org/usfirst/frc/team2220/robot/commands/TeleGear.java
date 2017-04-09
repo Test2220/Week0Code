@@ -17,11 +17,11 @@ public class TeleGear extends CommandGroup
 	public TeleGear()
 	{
 		addSequential(new FBCameraMotion(2));
-		addSequential(new AutoMotion(distance, distance, driveAccel, driveSpeed, 2));
+		addSequential(new AutoMotion(distance, distance, driveAccel, driveSpeed), 2);
 
 		// release gear
-		addSequential(new ShiftCollector(false));
+		addSequential(new ShiftClimber(false));
 		addSequential(new Delay(3));
-		addSequential(new ShiftCollector(true));
+		addSequential(new ShiftClimber(true));
 	}
 }

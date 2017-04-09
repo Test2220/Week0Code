@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2220.robot.commands;
 
 import org.usfirst.frc.team2220.robot.OI;
-import org.usfirst.frc.team2220.robot.RobotMap;
+import org.usfirst.frc.team2220.robot.subsystems.FlameThrower;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Timer;
@@ -22,7 +22,7 @@ public class RootyTootyPointAndShooty extends Command
 	public RootyTootyPointAndShooty()
 	{
 		// Use requires() here to declare subsystem dependencies
-		requires(RobotMap.flamethrower);
+		requires(FlameThrower.getInstance());
 	}
 
 	// Called just before this Command runs the first time
@@ -36,15 +36,16 @@ public class RootyTootyPointAndShooty extends Command
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
-		RobotMap.flamethrower.runShooter(shooterPower);
+		FlameThrower.getInstance().runShooter(shooterPower);
 		if (startTimer.get() > 1) // arbitrary
 		{
-			RobotMap.flamethrower.runMeter(meterPower);
+			FlameThrower.getInstance().runMeter(meterPower);
 			OI.manipulatorStick.setRumble(RumbleType.kRightRumble, highRumble);
 			OI.manipulatorStick.setRumble(RumbleType.kLeftRumble, highRumble);
-		} else
+		}
+		else
 		{
-			RobotMap.flamethrower.stopMeter();
+			FlameThrower.getInstance().stopMeter();
 			OI.manipulatorStick.setRumble(RumbleType.kRightRumble, lowRumble);
 			OI.manipulatorStick.setRumble(RumbleType.kLeftRumble, lowRumble);
 		}

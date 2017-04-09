@@ -1,8 +1,7 @@
 package org.usfirst.frc.team2220.robot.subsystems;
 
-import org.usfirst.frc.team2220.robot.OI;
 import org.usfirst.frc.team2220.robot.RobotMap;
-import org.usfirst.frc.team2220.robot.commands.RunIntake;
+import org.usfirst.frc.team2220.robot.commands.RunClimber;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -10,23 +9,29 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class Intake extends Subsystem
+public class Climber extends Subsystem
 {
+	public static Climber instance_ = new Climber();
+	public boolean shiftState;
 
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
+	public static Climber getInstance()
+	{
+		return instance_;
+	}
 
 	public void run(double val)
 	{
-		RobotMap.collectorMaster.set(val);
+		RobotMap.climberMaster.set(val);
 	}
 
 	public void shift(boolean highGear)
 	{
+		shiftState = highGear;
 		if (highGear)
 		{
 			RobotMap.collectorShifter.set(Value.kForward);
-		} else
+		}
+		else
 		{
 			RobotMap.collectorShifter.set(Value.kReverse);
 		}
@@ -34,8 +39,6 @@ public class Intake extends Subsystem
 
 	public void initDefaultCommand()
 	{
-		setDefaultCommand(new RunIntake(0.0));
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
+		setDefaultCommand(new RunClimber(0.0));
 	}
 }

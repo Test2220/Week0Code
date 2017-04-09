@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2220.robot.commands;
 
-import org.usfirst.frc.team2220.robot.RobotMap;
+import org.usfirst.frc.team2220.robot.subsystems.FlameThrower;
+import org.usfirst.frc.team2220.robot.subsystems.Washer;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.TimedCommand;
@@ -18,8 +19,8 @@ public class AutoShoot extends TimedCommand
 	public AutoShoot(double timeout)
 	{
 		super(timeout);
-		requires(RobotMap.flamethrower);
-		requires(RobotMap.washerSubsystem);
+		requires(FlameThrower.getInstance());
+		requires(Washer.getInstance());
 	}
 
 	// Called just before this Command runs the first time
@@ -33,24 +34,25 @@ public class AutoShoot extends TimedCommand
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
-		RobotMap.flamethrower.runShooter(shooterPower);
+		FlameThrower.getInstance().runShooter(shooterPower);
 		if (startTimer.get() > 0.5) // arbitrary
 		{
-			RobotMap.flamethrower.runMeter(meterPower);
-			RobotMap.washerSubsystem.runWasher(1.0);
-		} else
+			FlameThrower.getInstance().runMeter(meterPower);
+			Washer.getInstance().runWasher(1.0);
+		}
+		else
 		{
-			RobotMap.flamethrower.stopMeter();
-			RobotMap.washerSubsystem.runWasher(0.0);
+			FlameThrower.getInstance().stopMeter();
+			Washer.getInstance().runWasher(0.0);
 		}
 	}
 
 	// Called once after timeout
 	protected void end()
 	{
-		RobotMap.flamethrower.stopMeter();
-		RobotMap.flamethrower.stopShooter();
-		RobotMap.washerSubsystem.runWasher(0.0);
+		FlameThrower.getInstance().stopMeter();
+		FlameThrower.getInstance().stopShooter();
+		Washer.getInstance().runWasher(0.0);
 	}
 
 	// Called when another command which requires one or more of the same

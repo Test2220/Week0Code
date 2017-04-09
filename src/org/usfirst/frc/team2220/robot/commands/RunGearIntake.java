@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2220.robot.commands;
 
-import org.usfirst.frc.team2220.robot.RobotMap;
+import org.usfirst.frc.team2220.robot.subsystems.GearIntake;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -13,7 +13,7 @@ public class RunGearIntake extends Command
 	public RunGearIntake()
 	{
 		// Use requires() here to declare subsystem dependencies
-		requires(RobotMap.gearIntake);
+		requires(GearIntake.getInstance());
 	}
 
 	// Called just before this Command runs the first time
@@ -24,7 +24,7 @@ public class RunGearIntake extends Command
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
-		RobotMap.gearIntake.runJoysticks();
+		GearIntake.getInstance().runJoysticks();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

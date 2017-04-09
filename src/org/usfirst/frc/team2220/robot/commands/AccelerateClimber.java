@@ -34,11 +34,11 @@ public class AccelerateClimber extends Command
 	{
 		if (t.get() < aTime)
 		{
-			Climber.getInstance().run((t.get() / aTime) * -1.0);
+			Climber.getInstance().run((t.get() / aTime) * 1.0);
 		}
 		else
 		{
-			Climber.getInstance().run(-1.0);
+			Climber.getInstance().run(1.0);
 		}
 	}
 

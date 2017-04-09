@@ -1,7 +1,8 @@
 package org.usfirst.frc.team2220.robot.subsystems;
 
+import org.usfirst.frc.team2220.robot.OI;
 import org.usfirst.frc.team2220.robot.RobotMap;
-import org.usfirst.frc.team2220.robot.commands.RunClimber;
+import org.usfirst.frc.team2220.robot.commands.ClimberTrigger;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -17,6 +18,10 @@ public class Climber extends Subsystem
 	public static Climber getInstance()
 	{
 		return instance_;
+	}
+	public void climbWithTrigger()
+	{
+		run(RobotMap.deadzone( OI.manipulatorStick.getRawAxis(3), 0.1 ) * 1.0);
 	}
 
 	public void run(double val)
@@ -39,6 +44,6 @@ public class Climber extends Subsystem
 
 	public void initDefaultCommand()
 	{
-		setDefaultCommand(new RunClimber(0.0));
+		setDefaultCommand(new ClimberTrigger());
 	}
 }

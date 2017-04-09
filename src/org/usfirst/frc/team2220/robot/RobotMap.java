@@ -7,7 +7,6 @@ import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-// import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -32,6 +31,7 @@ public class RobotMap
 	public static Compressor compressor;
 
 	public final static int CLOSEDLOOPERROR = 30; //this is in native units so inchesToEncRev doesn't apply? TODO
+	public final static double DRIVE_DEADZONE = 0.15;
 
 	public static double deadzone(double val, double zone)
 	{
@@ -56,7 +56,7 @@ public class RobotMap
 	{
 		CameraServer.getInstance().startAutomaticCapture();
 
-		//@formatter:off -> nice indentation makes ez to ready
+		//@formatter:off -> nice indentation makes ez to read
 		lDriveMaster 	= new CANTalon(1);
 		lDriveSlave 	= new CANTalon(2);
 		rDriveMaster 	= new CANTalon(3);
@@ -73,13 +73,17 @@ public class RobotMap
 
 		compressor = new Compressor();
 
-		// this may be wrong on actual robot
+		// competition
+		/*
 		driveShifter = new DoubleSolenoid(6, 7);
 		collectorShifter = new DoubleSolenoid(0, 1);
+		*/
+		//practice
+		driveShifter = new DoubleSolenoid(0, 3);
+		collectorShifter = new DoubleSolenoid(6, 7);
 
 		compressor = new Compressor();
 
-		// TODO test before running
 		lDriveSlave.changeControlMode(TalonControlMode.Follower);
 		lDriveSlave.set(lDriveMaster.getDeviceID());
 

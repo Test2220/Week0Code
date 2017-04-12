@@ -24,6 +24,11 @@ public class XBoxTrigger extends Trigger
 		this.axis = axis;
 		TRIGGERdVAL = driveDeadzone;
 	}
+	
+	public void setDeadzone(double newDeadzone)
+	{
+		TRIGGERdVAL = newDeadzone;
+	}
 
 	public boolean get()
 	{

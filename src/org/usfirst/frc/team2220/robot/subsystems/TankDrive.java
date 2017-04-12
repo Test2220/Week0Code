@@ -10,12 +10,17 @@ import org.usfirst.frc.team2220.robot.RobotMap;
  */
 public class TankDrive extends Subsystem
 {
-	public static TankDrive instance_ = new TankDrive();
-	public boolean shiftState;
+	private static TankDrive instance_ = new TankDrive();
+	private boolean shiftState;
 
 	public static TankDrive getInstance()
 	{
 		return instance_;
+	}
+	
+	public boolean getShiftState()
+	{
+		return shiftState;
 	}
 
 	public static double rDriveMotorSetpoint = 0;
@@ -99,7 +104,6 @@ public class TankDrive extends Subsystem
 	{
 		RobotMap.rDriveMaster.set(rVal);
 		RobotMap.lDriveMaster.set(lVal);
-		// shift(RobotMap.driveInHighGear);
 	}
 
 	public void shift(boolean highGear)

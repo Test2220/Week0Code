@@ -130,8 +130,8 @@ public class Robot extends IterativeRobot
 		printCount++;
 		if (printCount % 100 == 0)
 		{
-			SmartDashboard.putBoolean("DrivetrainGear", TankDrive.getInstance().shiftState);
-			SmartDashboard.putBoolean("CollectorGear", Climber.getInstance().shiftState);
+			SmartDashboard.putBoolean("DrivetrainGear", TankDrive.getInstance().getShiftState());
+			SmartDashboard.putBoolean("CollectorGear", Climber.getInstance().getShiftState());
 			SmartDashboard.putNumber("rEnc", RobotMap.rDriveMaster.getEncPosition());
 			SmartDashboard.putNumber("lEnc", RobotMap.lDriveMaster.getEncPosition());
 		}

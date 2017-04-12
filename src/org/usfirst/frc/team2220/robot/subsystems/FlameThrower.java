@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class FlameThrower extends Subsystem
 {
-	public static FlameThrower instance_ = new FlameThrower();
+	private static FlameThrower instance_ = new FlameThrower();
 
 	public static FlameThrower getInstance()
 	{

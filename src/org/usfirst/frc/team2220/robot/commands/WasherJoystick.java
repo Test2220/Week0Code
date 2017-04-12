@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2220.robot.commands;
 
 import org.usfirst.frc.team2220.robot.subsystems.Washer;
+import org.usfirst.frc.team2220.robot.triggers.XBoxTrigger;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,8 +10,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class WasherJoystick extends Command
 {
-
-	public WasherJoystick()
+	XBoxTrigger trigger;
+	public WasherJoystick(XBoxTrigger trigger)
 	{
 		requires(Washer.getInstance());
 	}
@@ -20,10 +21,9 @@ public class WasherJoystick extends Command
 	{
 	}
 
-	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
-		Washer.getInstance().runJoysticks();
+		Washer.getInstance().runWasher(trigger.getVal());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -35,11 +35,7 @@ public class WasherJoystick extends Command
 	// Called once after isFinished returns true
 	protected void end()
 	{
+		Washer.getInstance().runWasher(0.0);
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted()
-	{
-	}
 }

@@ -13,8 +13,6 @@ public class OI
 	
 	public static XBox driverStick = new XBox(0);
 	public static XBox manipulatorStick = new XBox(1);
-	
-	public static int motorValueOff = 0;
 
 	private static DriveTrigger isDriving = new DriveTrigger();
 
@@ -27,12 +25,20 @@ public class OI
 		driverStick.leftBumper.whenPressed(new ShiftDrivetrain(true));
 		driverStick.rightBumper.whenPressed(new ShiftDrivetrain(false));
 		
-		isDriving.whileActive(new DriveWithControllers());
+		isDriving.whileActive(new DriveWithControllers(driverStick.rightYAxis, driverStick.leftYAxis));
 		isDriving.whenInactive(new DriveOff());
 
 		///////////////
 		//Manipulator//
 		///////////////
+		manipulatorStick.leftYAxis.setDeadzone(0.15);
+		manipulatorStick.leftYAxis.whenActive(new GearIntakeJoystick(manipulatorStick.leftYAxis));
+		
+		manipulatorStick.rightTrigger.setDeadzone(0.10);
+		manipulatorStick.rightTrigger.whileActive(new ClimberJoystick(manipulatorStick.rightTrigger));
+		
+		manipulatorStick.rightYAxis.setDeadzone(0.15);
+		manipulatorStick.rightYAxis.whenActive(new WasherJoystick(manipulatorStick.rightYAxis));
 
 		manipulatorStick.leftTrigger.whileActive(new RunClimber(1.0));
 		manipulatorStick.leftBumper.whileHeld(new RunWasher(1.0));

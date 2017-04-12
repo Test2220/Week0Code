@@ -1,8 +1,6 @@
 package org.usfirst.frc.team2220.robot.subsystems;
 
-import org.usfirst.frc.team2220.robot.OI;
 import org.usfirst.frc.team2220.robot.RobotMap;
-import org.usfirst.frc.team2220.robot.commands.WasherJoystick;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -11,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Washer extends Subsystem
 {
-	public static Washer instance_ = new Washer();
+	private static Washer instance_ = new Washer();
 
 	public static Washer getInstance()
 	{
@@ -23,10 +21,6 @@ public class Washer extends Subsystem
 		RobotMap.washer.set(pow);
 	}
 
-	public void runJoysticks()
-	{
-		RobotMap.washer.set(RobotMap.deadzone(OI.manipulatorStick.getRawAxis(5), 0.15) * -1);
-	}
 
 	public void stop()
 	{
@@ -35,6 +29,5 @@ public class Washer extends Subsystem
 
 	public void initDefaultCommand()
 	{
-		setDefaultCommand(new WasherJoystick());
 	}
 }

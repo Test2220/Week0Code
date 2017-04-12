@@ -1,18 +1,20 @@
 package org.usfirst.frc.team2220.robot.commands;
 
 import org.usfirst.frc.team2220.robot.subsystems.GearIntake;
+import org.usfirst.frc.team2220.robot.triggers.XBoxTrigger;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class RunGearIntake extends Command
+public class GearIntakeJoystick extends Command
 {
 
-	public RunGearIntake()
+	private XBoxTrigger trigger;
+	public GearIntakeJoystick(XBoxTrigger trigger)
 	{
-		// Use requires() here to declare subsystem dependencies
+		this.trigger = trigger;
 		requires(GearIntake.getInstance());
 	}
 
@@ -24,7 +26,7 @@ public class RunGearIntake extends Command
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute()
 	{
-		GearIntake.getInstance().runJoysticks();
+		GearIntake.getInstance().setMotors(trigger.getVal());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -33,14 +35,8 @@ public class RunGearIntake extends Command
 		return false;
 	}
 
-	// Called once after isFinished returns true
 	protected void end()
 	{
-	}
-
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted()
-	{
+		GearIntake.getInstance().setMotors(0.0);
 	}
 }

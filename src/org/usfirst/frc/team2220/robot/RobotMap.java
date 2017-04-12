@@ -49,7 +49,7 @@ public class RobotMap
 
 	public static double feetToEncRot(double input)
 	{
-		return inchesToEncRot(input / 12);
+		return inchesToEncRot(input * 12);
 	}
 
 	public static void init()

@@ -64,8 +64,5 @@ public class RobotMap
 		//Practice
 		driveShifter = new DoubleSolenoid(0, 3);
 		collectorShifter = new DoubleSolenoid(6, 7);
-
-		compressor = new Compressor();
-
 	}
 }

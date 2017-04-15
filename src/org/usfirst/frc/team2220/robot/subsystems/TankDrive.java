@@ -17,8 +17,11 @@ public class TankDrive extends Subsystem
 	private static TankDrive instance_ = new TankDrive();
 	private boolean shiftState;
 	
-	public static CANTalon rDriveMaster, rDriveSlave;
-	public static CANTalon lDriveMaster, lDriveSlave;
+	private static CANTalon rDriveMaster, rDriveSlave;
+	private static CANTalon lDriveMaster, lDriveSlave;
+	
+	public static double rDriveMotorSetpoint = 0;
+	public static double lDriveMotorSetpoint = 0;
 	
 	public final static int CLOSEDLOOPERROR = 30; //this is in native units so inchesToEncRev doesn't apply? TODO
 	public final static double DRIVE_DEADZONE = 0.15;
@@ -75,10 +78,6 @@ public class TankDrive extends Subsystem
 	{
 		return shiftState;
 	}
-
-	public static double rDriveMotorSetpoint = 0;
-	public static double lDriveMotorSetpoint = 0;
-	public static final double ALLOWED_ERROR = 15;
 
 	public void resetEncoderPos()
 	{

@@ -1,6 +1,6 @@
 package lib.util;
 
-import org.usfirst.frc.team2220.robot.RobotMap;
+import org.usfirst.frc.team2220.robot.subsystems.TankDrive;
 import org.usfirst.frc.team2220.robot.triggers.XBoxTrigger;
 
 import edu.wpi.first.wpilibj.XboxController;
@@ -24,8 +24,8 @@ public class XBox extends XboxController
 		rightBumper = new JoystickButton(this, 6);
 
 		//@formatter:off -> nice indentation makes ez to read
-		leftYAxis    = new XBoxTrigger(this, 1, RobotMap.DRIVE_DEADZONE);
-		rightYAxis   = new XBoxTrigger(this, 5, RobotMap.DRIVE_DEADZONE);
+		leftYAxis    = new XBoxTrigger(this, 1, TankDrive.DRIVE_DEADZONE);
+		rightYAxis   = new XBoxTrigger(this, 5, TankDrive.DRIVE_DEADZONE);
 		
 		leftTrigger  = new XBoxTrigger(this, 2, 0.6);
 		rightTrigger = new XBoxTrigger(this, 3, 0.6);

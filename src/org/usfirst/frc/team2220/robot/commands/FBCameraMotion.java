@@ -1,10 +1,6 @@
 package org.usfirst.frc.team2220.robot.commands;
 
-import org.usfirst.frc.team2220.robot.RobotMap;
 import org.usfirst.frc.team2220.robot.subsystems.TankDrive;
-
-import com.ctre.CANTalon.TalonControlMode;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -37,8 +33,7 @@ public class FBCameraMotion extends Command
 		t = new Timer();
 		t.reset();
 		t.start();
-		RobotMap.rDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
-		RobotMap.lDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
+		TankDrive.getInstance().changeToMotionMagic();
 
 		TankDrive.getInstance().resetEncoderPos();
 	}

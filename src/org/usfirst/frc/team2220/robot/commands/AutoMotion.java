@@ -1,9 +1,7 @@
 package org.usfirst.frc.team2220.robot.commands;
 
-import org.usfirst.frc.team2220.robot.RobotMap;
 import org.usfirst.frc.team2220.robot.subsystems.TankDrive;
 
-import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -34,8 +32,7 @@ public class AutoMotion extends Command
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{
-		RobotMap.rDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
-		RobotMap.lDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
+		TankDrive.getInstance().changeToMotionMagic();
 		TankDrive.getInstance().setBothAccel(a);
 		TankDrive.getInstance().setBothCruiseVel(v);
 

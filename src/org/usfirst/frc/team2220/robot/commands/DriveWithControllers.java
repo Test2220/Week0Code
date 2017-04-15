@@ -1,10 +1,7 @@
 package org.usfirst.frc.team2220.robot.commands;
 
-import org.usfirst.frc.team2220.robot.RobotMap;
 import org.usfirst.frc.team2220.robot.subsystems.TankDrive;
 import org.usfirst.frc.team2220.robot.triggers.XBoxTrigger;
-
-import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -25,8 +22,7 @@ public class DriveWithControllers extends Command
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{
-		RobotMap.rDriveMaster.changeControlMode(TalonControlMode.PercentVbus);
-		RobotMap.lDriveMaster.changeControlMode(TalonControlMode.PercentVbus);
+		TankDrive.getInstance().changeToPercentVBus();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -36,8 +32,6 @@ public class DriveWithControllers extends Command
 		double rVal = rightTrigger.getVal() * scale * -1.0;
 		double lVal = leftTrigger.getVal()  * scale;
 		
-		rVal = RobotMap.deadzone(rVal, RobotMap.DRIVE_DEADZONE);
-		lVal = RobotMap.deadzone(lVal, RobotMap.DRIVE_DEADZONE);
 		TankDrive.getInstance().controllerTank(rVal, lVal); 
 	}
 

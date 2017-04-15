@@ -1,9 +1,5 @@
 package org.usfirst.frc.team2220.robot;
 
-import com.ctre.CANTalon;
-import com.ctre.CANTalon.FeedbackDevice;
-import com.ctre.CANTalon.TalonControlMode;
-
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -19,41 +15,22 @@ public class RobotMap
 {
 
 	//@formatter:off
-	public static final int RIGHT_GEAR_INTAKE  = 10,
-							LEFT_GEAR_INTAKE   = 11;
+	public static final int LEFT_DRIVE_MASTER  = 1,
+							LEFT_DRIVE_SLAVE   = 2,
+							RIGHT_DRIVE_MASTER = 3,
+							RIGHT_DRIVE_SLAVE  = 4,
+							CLIMBER_MASTER     = 5,
+							CLIMBER_SLAVE      = 6,
+							METERERER		   = 7,
+							WASHER			   = 8,
+							SHOOTER			   = 9,
+							RIGHT_GEAR_INTAKE  = 10,
+							LEFT_GEAR_INTAKE   = 11;								
 	//@formatter:on
-	public class Constants
-	{
-		//@formatter:off
-		public static final int RIGHT_DRIVE_MASTER = 1,
-								RIGHT_DRIVE_SLAVE  = 2,
-								LEFT_DRIVE_MASTER  = 3,
-								LEFT_DRIVE_SLAVE   = 4,
-								CLIMBER_MASTER     = 5,
-								CLIMBER_SLAVE      = 6,
-								METERERER		   = 7,
-								WASHER			   = 8,
-								SHOOTER			   = 9;
-																
-		//@formatter:on
-	}
-
-	public static CANTalon rDriveMaster, rDriveSlave;
-	public static CANTalon lDriveMaster, lDriveSlave;
-	public static CANTalon climberMaster, climberSlave;
-	public static CANTalon washer;
-	public static CANTalon metererer;
-	public static CANTalon shooter;
-	//public static CANTalon gearIntakeR, gearIntakeL;
-
 	public static DoubleSolenoid driveShifter;
 	public static DoubleSolenoid collectorShifter;
 
 	public static Compressor compressor;
-	
-
-	public final static int CLOSEDLOOPERROR = 30; //this is in native units so inchesToEncRev doesn't apply? TODO
-	public final static double DRIVE_DEADZONE = 0.15;
 
 	public static double deadzone(double val, double zone)
 	{
@@ -64,8 +41,8 @@ public class RobotMap
 
 	public static double inchesToEncRot(double input)
 	{
-		input = input / 23.75; // wheel rotations
-		input = input * 8; // encoder revolutions
+		input = input / 23.75; 	//Wheel rotations
+		input = input * 8; 		//Encoder revolutions
 		return input;
 	}
 
@@ -77,82 +54,18 @@ public class RobotMap
 	public static void init()
 	{
 		CameraServer.getInstance().startAutomaticCapture();
-		
-		//@formatter:off -> nice indentation makes ez to read
-		lDriveMaster 	= new CANTalon(1);
-		lDriveSlave 	= new CANTalon(2);
-		rDriveMaster 	= new CANTalon(3);
-		rDriveSlave 	= new CANTalon(4);
-
-		climberMaster 	= new CANTalon(5);
-		climberSlave 	= new CANTalon(6);
-		washer 			= new CANTalon(8);
-		metererer 		= new CANTalon(7);
-		shooter 		= new CANTalon(9);
-	//	gearIntakeR 	= new CANTalon(10);
-	//	gearIntakeL 	= new CANTalon(11);
-		//@formatter:on
-
 		compressor = new Compressor();
 
-		// competition
-		/* driveShifter = new DoubleSolenoid(6, 7); collectorShifter = new
-		 * DoubleSolenoid(0, 1); */
-		//practice
+		/* Competition
+		driveShifter = new DoubleSolenoid(6, 7); 
+		collectorShifter = new DoubleSolenoid(0, 1); 
+		*/
+		
+		//Practice
 		driveShifter = new DoubleSolenoid(0, 3);
 		collectorShifter = new DoubleSolenoid(6, 7);
 
 		compressor = new Compressor();
-
-		lDriveSlave.changeControlMode(TalonControlMode.Follower);
-		lDriveSlave.set(lDriveMaster.getDeviceID());
-
-		rDriveSlave.changeControlMode(TalonControlMode.Follower);
-		rDriveSlave.set(rDriveMaster.getDeviceID());
-
-		climberSlave.changeControlMode(TalonControlMode.Follower);
-		climberSlave.set(climberMaster.getDeviceID());
-
-		/* Encoders = 128 ticks per rev Talon Native Units (allowableError) =
-		 * 512 per rev Encoder Output 12:36 = 3x speed Encoder = 384 actual tick
-		 * per wheel rotation Talon Native Unites = 1536 per wheel rotation
-		 * 8inch wheel ~25 inch cir 25:1536 if Closed loopError = 61.44 our
-		 * range = +- 0.5 inches 15 position units per rotation? 4Talon native
-		 * units ~= 1 degree */
-		/* input -> rotations 1 wheel rotation = 8 encoder revs wheel distance =
-		 * 2.25 feet or 27 inches ~2 feet/wheel rotation */
-
-		// TODO remove
-		int accel = 400;
-		int cruiseVel = 400;
-
-		rDriveMaster.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		rDriveMaster.reverseSensor(true);
-		rDriveMaster.configEncoderCodesPerRev(256); // 4 x 256 = 1024
-													// wrong->4x128=512
-		rDriveMaster.setAllowableClosedLoopErr(CLOSEDLOOPERROR);
-
-		rDriveMaster.setEncPosition(0);
-
-		double kP = 2.0;
-		double kI = 0.0015;
-		double kD = 0.0; // 50
-		rDriveMaster.setF(240);// 119.47); //encoder ticks per 100ms -> 9.34 RPS
-		rDriveMaster.setPID(kP, kI, kD); // i->0.001 //p->2.4
-		rDriveMaster.setMotionMagicAcceleration(accel); // RPM/S
-		rDriveMaster.setMotionMagicCruiseVelocity(cruiseVel); // RPM
-
-		lDriveMaster.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		lDriveMaster.reverseSensor(false);
-		lDriveMaster.configEncoderCodesPerRev(256);
-		lDriveMaster.setAllowableClosedLoopErr(CLOSEDLOOPERROR);
-
-		lDriveMaster.setEncPosition(0);
-
-		lDriveMaster.setF(240);// 119.47); //encoder ticks per 100ms -> 9.34 RPS
-		lDriveMaster.setPID(kP, kI, kD); // i->0.001 //p->2.4
-		lDriveMaster.setMotionMagicAcceleration(accel); // RPM/S
-		lDriveMaster.setMotionMagicCruiseVelocity(cruiseVel); // RPM
 
 	}
 }

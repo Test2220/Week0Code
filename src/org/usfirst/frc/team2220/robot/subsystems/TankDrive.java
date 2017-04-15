@@ -5,6 +5,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 import org.usfirst.frc.team2220.robot.RobotMap;
 
+import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
+
 /**
  *
  */
@@ -12,10 +16,59 @@ public class TankDrive extends Subsystem
 {
 	private static TankDrive instance_ = new TankDrive();
 	private boolean shiftState;
-
+	
+	public static CANTalon rDriveMaster, rDriveSlave;
+	public static CANTalon lDriveMaster, lDriveSlave;
+	
+	public final static int CLOSEDLOOPERROR = 30; //this is in native units so inchesToEncRev doesn't apply? TODO
+	public final static double DRIVE_DEADZONE = 0.15;
+	
 	public static TankDrive getInstance()
 	{
 		return instance_;
+	}
+	
+	public TankDrive()
+	{
+		rDriveMaster = new CANTalon(RobotMap.RIGHT_DRIVE_MASTER);
+		rDriveSlave  = new CANTalon(RobotMap.RIGHT_DRIVE_SLAVE);
+		lDriveMaster = new CANTalon(RobotMap.LEFT_DRIVE_MASTER);
+		lDriveSlave  = new CANTalon(RobotMap.LEFT_DRIVE_SLAVE);
+		
+		rDriveSlave.changeControlMode(TalonControlMode.Follower);
+		rDriveSlave.set(rDriveMaster.getDeviceID());
+		
+		lDriveSlave.changeControlMode(TalonControlMode.Follower);
+		lDriveSlave.set(lDriveMaster.getDeviceID());
+		
+		// TODO remove
+		int accel = 400, cruiseVel = 400;
+
+		rDriveMaster.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		rDriveMaster.reverseSensor(true);
+		rDriveMaster.configEncoderCodesPerRev(256); // 4 x 256 = 1024
+		
+		rDriveMaster.setAllowableClosedLoopErr(CLOSEDLOOPERROR);
+
+		rDriveMaster.setEncPosition(0);
+
+		double kP = 2.0, kI = 0.0015, kD = 0.0;
+		rDriveMaster.setF(240);  //encoder ticks per 100ms -> 9.34 RPS
+		rDriveMaster.setPID(kP, kI, kD);
+		rDriveMaster.setMotionMagicAcceleration(accel); // RPM/S
+		rDriveMaster.setMotionMagicCruiseVelocity(cruiseVel); // RPM
+
+		lDriveMaster.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		lDriveMaster.reverseSensor(false);
+		lDriveMaster.configEncoderCodesPerRev(256);
+		lDriveMaster.setAllowableClosedLoopErr(CLOSEDLOOPERROR);
+
+		lDriveMaster.setEncPosition(0);
+
+		lDriveMaster.setF(240); //encoder ticks per 100ms -> 9.34 RPS
+		lDriveMaster.setPID(kP, kI, kD); 
+		lDriveMaster.setMotionMagicAcceleration(accel); // RPM/S
+		lDriveMaster.setMotionMagicCruiseVelocity(cruiseVel); // RPM
 	}
 	
 	public boolean getShiftState()
@@ -29,8 +82,20 @@ public class TankDrive extends Subsystem
 
 	public void resetEncoderPos()
 	{
-		rDriveMotorSetpoint = RobotMap.rDriveMaster.getPosition();
-		lDriveMotorSetpoint = RobotMap.lDriveMaster.getPosition();
+		rDriveMotorSetpoint = rDriveMaster.getPosition();
+		lDriveMotorSetpoint = lDriveMaster.getPosition();
+	}
+	
+	public void changeToMotionMagic()
+	{
+		rDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
+		lDriveMaster.changeControlMode(TalonControlMode.MotionMagic);
+	}
+	
+	public void changeToPercentVBus()
+	{
+		rDriveMaster.changeControlMode(TalonControlMode.PercentVbus);
+		lDriveMaster.changeControlMode(TalonControlMode.PercentVbus);
 	}
 
 	/**
@@ -47,12 +112,12 @@ public class TankDrive extends Subsystem
 
 	public void setRCruiseVel(double x)
 	{
-		RobotMap.rDriveMaster.setMotionMagicCruiseVelocity(x);
+		rDriveMaster.setMotionMagicCruiseVelocity(x);
 	}
 
 	public void setLCruiseVel(double x)
 	{
-		RobotMap.lDriveMaster.setMotionMagicCruiseVelocity(x);
+		lDriveMaster.setMotionMagicCruiseVelocity(x);
 	}
 
 	public void setBothAccel(double x)
@@ -63,25 +128,25 @@ public class TankDrive extends Subsystem
 
 	public void setRAccel(double x)
 	{
-		RobotMap.rDriveMaster.setMotionMagicAcceleration(x);
+		rDriveMaster.setMotionMagicAcceleration(x);
 	}
 
 	public void setLAccel(double x)
 	{
-		RobotMap.lDriveMaster.setMotionMagicAcceleration(x);
+		lDriveMaster.setMotionMagicAcceleration(x);
 	}
 
 	// NEGATIVE FOR BACKWARDS
 	public void incrementRPosition(double x)
 	{
 		rDriveMotorSetpoint += x;
-		RobotMap.rDriveMaster.set(rDriveMotorSetpoint);
+		rDriveMaster.set(rDriveMotorSetpoint);
 	}
 
 	public void incrementLPosition(double x)
 	{
 		lDriveMotorSetpoint -= x;
-		RobotMap.lDriveMaster.set(lDriveMotorSetpoint);
+		lDriveMaster.set(lDriveMotorSetpoint);
 	}
 
 	public void incrementAllPos(double x)
@@ -92,18 +157,18 @@ public class TankDrive extends Subsystem
 
 	public boolean hasHitRSetpoint()
 	{
-		return Math.abs(RobotMap.rDriveMaster.getClosedLoopError()) < RobotMap.CLOSEDLOOPERROR;
+		return Math.abs(rDriveMaster.getClosedLoopError()) < CLOSEDLOOPERROR;
 	}
 
 	public boolean hasHitLSetpoint()
 	{
-		return Math.abs(RobotMap.lDriveMaster.getClosedLoopError()) < RobotMap.CLOSEDLOOPERROR;
+		return Math.abs(lDriveMaster.getClosedLoopError()) < CLOSEDLOOPERROR;
 	}
 
 	public void controllerTank(double rVal, double lVal)
 	{
-		RobotMap.rDriveMaster.set(rVal);
-		RobotMap.lDriveMaster.set(lVal);
+		rDriveMaster.set(rVal);
+		lDriveMaster.set(lVal);
 	}
 
 	public void shift(boolean highGear)
@@ -121,8 +186,8 @@ public class TankDrive extends Subsystem
 
 	public void stopMotors()
 	{
-		RobotMap.rDriveMaster.set(0);
-		RobotMap.lDriveMaster.set(0);
+		rDriveMaster.set(0);
+		lDriveMaster.set(0);
 	}
 
 	@Override

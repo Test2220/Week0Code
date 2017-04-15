@@ -13,6 +13,7 @@ public class WasherJoystick extends Command
 	XBoxTrigger trigger;
 	public WasherJoystick(XBoxTrigger trigger)
 	{
+		this.trigger = trigger;
 		requires(Washer.getInstance());
 	}
 

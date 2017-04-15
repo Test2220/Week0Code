@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2220.robot.triggers;
 
+import org.usfirst.frc.team2220.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.buttons.Trigger;
 
@@ -32,11 +34,11 @@ public class XBoxTrigger extends Trigger
 
 	public boolean get()
 	{
-		return getVal() < -TRIGGERdVAL || getVal() > TRIGGERdVAL;
+		return getVal() != 0;
 	}
 	
 	public double getVal()
 	{
-		return stick.getRawAxis(axis);
+		return RobotMap.deadzone(stick.getRawAxis(axis), TRIGGERdVAL);
 	}
 }

@@ -14,8 +14,29 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  */
+
 public class RobotMap
 {
+
+	//@formatter:off
+	public static final int RIGHT_GEAR_INTAKE  = 10,
+							LEFT_GEAR_INTAKE   = 11;
+	//@formatter:on
+	public class Constants
+	{
+		//@formatter:off
+		public static final int RIGHT_DRIVE_MASTER = 1,
+								RIGHT_DRIVE_SLAVE  = 2,
+								LEFT_DRIVE_MASTER  = 3,
+								LEFT_DRIVE_SLAVE   = 4,
+								CLIMBER_MASTER     = 5,
+								CLIMBER_SLAVE      = 6,
+								METERERER		   = 7,
+								WASHER			   = 8,
+								SHOOTER			   = 9;
+																
+		//@formatter:on
+	}
 
 	public static CANTalon rDriveMaster, rDriveSlave;
 	public static CANTalon lDriveMaster, lDriveSlave;
@@ -23,12 +44,13 @@ public class RobotMap
 	public static CANTalon washer;
 	public static CANTalon metererer;
 	public static CANTalon shooter;
-	public static CANTalon gearIntakeR, gearIntakeL;
+	//public static CANTalon gearIntakeR, gearIntakeL;
 
 	public static DoubleSolenoid driveShifter;
 	public static DoubleSolenoid collectorShifter;
 
 	public static Compressor compressor;
+	
 
 	public final static int CLOSEDLOOPERROR = 30; //this is in native units so inchesToEncRev doesn't apply? TODO
 	public final static double DRIVE_DEADZONE = 0.15;
@@ -55,7 +77,7 @@ public class RobotMap
 	public static void init()
 	{
 		CameraServer.getInstance().startAutomaticCapture();
-
+		
 		//@formatter:off -> nice indentation makes ez to read
 		lDriveMaster 	= new CANTalon(1);
 		lDriveSlave 	= new CANTalon(2);
@@ -67,17 +89,15 @@ public class RobotMap
 		washer 			= new CANTalon(8);
 		metererer 		= new CANTalon(7);
 		shooter 		= new CANTalon(9);
-		gearIntakeR 	= new CANTalon(10);
-		gearIntakeL 	= new CANTalon(11);
+	//	gearIntakeR 	= new CANTalon(10);
+	//	gearIntakeL 	= new CANTalon(11);
 		//@formatter:on
 
 		compressor = new Compressor();
 
 		// competition
-		/*
-		driveShifter = new DoubleSolenoid(6, 7);
-		collectorShifter = new DoubleSolenoid(0, 1);
-		*/
+		/* driveShifter = new DoubleSolenoid(6, 7); collectorShifter = new
+		 * DoubleSolenoid(0, 1); */
 		//practice
 		driveShifter = new DoubleSolenoid(0, 3);
 		collectorShifter = new DoubleSolenoid(6, 7);

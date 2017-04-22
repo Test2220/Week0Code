@@ -85,6 +85,28 @@ public class TankDrive extends Subsystem
 		lDriveMotorSetpoint = lDriveMaster.getPosition();
 	}
 	
+	public double getRPosition()
+	{
+		return rDriveMaster.getPosition();
+	}
+	
+	public double getLPosition()
+	{
+		return lDriveMaster.getPosition();
+	}
+	
+	public void setRPosition(double position)
+	{
+		rDriveMotorSetpoint = position;
+		rDriveMaster.set(rDriveMotorSetpoint);
+	}
+	
+	public void setLPosition(double position)
+	{
+		lDriveMotorSetpoint = position;
+		lDriveMaster.set(lDriveMotorSetpoint);
+	}
+	
 	public void changeToMotionMagic()
 	{
 		rDriveMaster.changeControlMode(TalonControlMode.MotionMagic);

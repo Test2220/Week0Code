@@ -24,6 +24,7 @@ public class OI
 		driverStick.yButton.whenPressed(new TeleMotion(2.5, 2.5, 500, 1000));
 		driverStick.leftBumper.whenPressed(new ShiftDrivetrain(true));
 		driverStick.rightBumper.whenPressed(new ShiftDrivetrain(false));
+		driverStick.xButton.whenPressed(new GearCameraLineUp());
 		
 		isDriving.whileActive(new DriveWithControllers(driverStick.rightYAxis, driverStick.leftYAxis));
 		isDriving.whenInactive(new DriveOff());

@@ -132,8 +132,8 @@ public class Robot extends IterativeRobot
 		{
 			SmartDashboard.putBoolean("DrivetrainGear", TankDrive.getInstance().getShiftState());
 			SmartDashboard.putBoolean("CollectorGear", Climber.getInstance().getShiftState());
-			//SmartDashboard.putNumber("rEnc", RobotMap.rDriveMaster.getEncPosition()); //TODO add functions
-			//SmartDashboard.putNumber("lEnc", RobotMap.lDriveMaster.getEncPosition());
+			SmartDashboard.putNumber("rEnc", TankDrive.getInstance().getRPosition());
+			SmartDashboard.putNumber("lEnc", TankDrive.getInstance().getLPosition());
 		}
 
 	}

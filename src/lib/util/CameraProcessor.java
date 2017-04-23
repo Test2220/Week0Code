@@ -16,12 +16,12 @@ public class CameraProcessor
 		NetworkTable contourTable = NetworkTable.getTable("GRIP/myContoursReport");
 		double[] centerX = contourTable.getNumberArray("centerX", new double[] {});
 		double[] area = contourTable.getNumberArray("area", new double[] {});
-		for(int i = 0;i < centerX.length;i++)
+		for(int i = 0;i < centerX.length && i < area.length;i++)
 		{
 			contours.add(new Contour(centerX[i], area[i]));
 		}
 		
-		Collections.sort(contours, (o1, o2) -> Double.compare(o1.getArea(), o2.getArea()));
+		Collections.sort(contours, (o1, o2) -> Double.compare(o2.getArea(), o1.getArea()));
 		
 		double pixelDistance, cameraError;
 		try
@@ -45,7 +45,9 @@ public class CameraProcessor
 				return;
 			}
 		}
-		double distanceAway = (Math.log(pixelDistance) * -44.61) + 241.3;
+		//regression equation
+		//double distanceAway = (Math.log(pixelDistance) * -44.61) + 241.3; //logrithmic
+		double distanceAway = (3262.49638 / pixelDistance) + -0.1697009;
 		double inchesPerPixel = 8 / pixelDistance;
 		
 		double inchesToRotate = inchesPerPixel * cameraError;

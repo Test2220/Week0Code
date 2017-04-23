@@ -2,7 +2,6 @@ package org.usfirst.frc.team2220.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import lib.util.CameraProcessor;
 
 import org.usfirst.frc.team2220.robot.RobotMap;
 

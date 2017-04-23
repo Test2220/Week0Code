@@ -1,94 +1,71 @@
 package lib.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-import org.usfirst.frc.team2220.robot.subsystems.TankDrive;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class CameraProcessor
 {
-	ArrayList<Target> targets = new ArrayList<Target>();
-
-	private double motorVal = 0.1; //TODO decide intelligent default
-
-	public CameraProcessor(Target initialVal)
-	{
-		targets.add(initialVal);
-		if(initialVal.getCameraError() > 0)
-		{
-			motorVal = 0.25;
-		}
-		else
-		{
-			motorVal = -0.25;
-		}
-	}
+	ArrayList<Contour> contours = new ArrayList<Contour>();
+	private final double HALF_CAMERA_WIDTH = 160;
+	private double distanceToTurn;
 	
-	public double getMotorVal()
+	public CameraProcessor()
 	{
-		return motorVal;
-	}
-	
-	public void resetMotorVal(Target newFrame)
-	{
-		targets.add(newFrame);
-		if(newFrame.getCameraError() > 0)
+		NetworkTable contourTable = NetworkTable.getTable("GRIP/myContoursReport");
+		double[] centerX = contourTable.getNumberArray("centerX", new double[] {});
+		double[] area = contourTable.getNumberArray("area", new double[] {});
+		for(int i = 0;i < centerX.length;i++)
 		{
-			motorVal = 0.25;
+			contours.add(new Contour(centerX[i], area[i]));
 		}
-		else
+		
+		Collections.sort(contours, (o1, o2) -> Double.compare(o1.getArea(), o2.getArea()));
+		
+		double pixelDistance, cameraError;
+		try
 		{
-			motorVal = -0.25;
+			Contour biggest = contours.get(0);
+			Contour next = contours.get(1);
+			pixelDistance = Math.abs(biggest.getCenterX() - next.getCenterX()); //8 inches
+			cameraError = HALF_CAMERA_WIDTH - ((biggest.getCenterX() + next.getCenterX()) / 2);
 		}
-	}
-	
-
-	public double addTarget(Target input)
-	{
-		while(targets.size() > 5)
+		catch(Exception e) //one or less targets
 		{
-			targets.remove(0);
-		}
-		if (input != null && targets.get(targets.size() - 1).getCameraError() != input.getCameraError())
-		{
-			if(targets.get(targets.size() - 1).getPosition() != input.getPosition())
+			try
 			{
-				if( Math.abs(input.getCameraError() - targets.get(targets.size() - 1).getCameraError()) >= 10)
-				{
-					
-					targets.add(input);
-					
-					//System.out.println(this);
-					calculateNewPosition();
-				}
+				Contour biggest = contours.get(0);
+				pixelDistance = 10; //TODO decide intelligent value
+				cameraError = HALF_CAMERA_WIDTH - biggest.getCenterX();
+			}
+			catch(Exception e1) //no targets
+			{
+				distanceToTurn = 0;
+				return;
 			}
 		}
-		return motorVal;
+		double distanceAway = (Math.log(pixelDistance) * -44.61) + 241.3;
+		double inchesPerPixel = 8 / pixelDistance;
+		
+		double inchesToRotate = inchesPerPixel * cameraError;
+		double degreesToRotate = (inchesToRotate / (distanceAway * 2 * Math.PI)) * 360;
+		//7.25 = 90 degrees
+		distanceToTurn = degreesToRotate * (7.5 / 90);
 	}
-
-	private double calculateNewPosition()
+	
+	public double getDistanceToTurn()
 	{
-		if (targets.size() >= 2)
-		{
-			Target current = targets.get(targets.size() - 1);
-			Target previous = targets.get(targets.size() - 2);
-			double deltaCameraError = current.getCameraError() - previous.getCameraError();
-			double deltaPosition = current.getPosition() - previous.getPosition();
-			
-			System.out.print("Old = " + motorVal);
-			System.out.print(" Current = [" + current + "] deltaErr = " + deltaCameraError + " deltaPos = " + deltaPosition);
-			motorVal = Math.abs(deltaPosition / deltaCameraError) * current.getCameraError();
-			System.out.println(" New = " + motorVal);
-		}
-		return motorVal;
+		return distanceToTurn;
 	}
+	
 
 	public String toString()
 	{
-		String out = ">>>[Targets]<<<";
-		out += "\nMotorVal = " + motorVal;
-		for (int i = 0; i < targets.size(); i++)
+		String out = ">>>[Contours]<<<";
+		for (int i = 0; i < contours.size(); i++)
 		{
-			out += "\n" + targets.get(i).toString();
+			out += "\n" + contours.get(i).toString();
 		}
 		out += "\n>>>>>>>><<<<<<<<";
 		return out;

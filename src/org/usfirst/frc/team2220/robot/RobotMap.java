@@ -53,7 +53,7 @@ public class RobotMap
 
 	public static void init()
 	{
-		CameraServer.getInstance().startAutomaticCapture();
+		//CameraServer.getInstance().startAutomaticCapture();
 		compressor = new Compressor();
 
 		/* Competition

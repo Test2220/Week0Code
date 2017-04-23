@@ -47,7 +47,7 @@ public class CameraProcessor
 		}
 		//regression equation
 		//double distanceAway = (Math.log(pixelDistance) * -44.61) + 241.3; //logrithmic
-		double distanceAway = (3262.49638 / pixelDistance) + -0.1697009;
+		double distanceAway = (3262.49638 / pixelDistance) + -0.1697009; //inverse
 		double inchesPerPixel = 8 / pixelDistance;
 		
 		double inchesToRotate = inchesPerPixel * cameraError;

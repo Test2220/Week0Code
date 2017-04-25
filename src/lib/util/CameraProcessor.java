@@ -52,8 +52,9 @@ public class CameraProcessor
 		
 		double inchesToRotate = inchesPerPixel * cameraError;
 		double degreesToRotate = (inchesToRotate / (distanceAway * 2 * Math.PI)) * 360;
-		//7.25 = 90 degrees
-		distanceToTurn = degreesToRotate * (7.5 / 90);
+		double encRotationsPerDegree = 7.5 / 90; //7.25 = 90 degrees
+		
+		distanceToTurn = degreesToRotate * encRotationsPerDegree;
 	}
 	
 	public double getDistanceToTurn()

@@ -187,6 +187,22 @@ public class TankDrive extends Subsystem
 	{
 		return Math.abs(lDriveMaster.getClosedLoopError()) < CLOSEDLOOPERROR;
 	}
+	
+	private final int DONE_COUNT_MAX = 10;
+	private int currentDoneCount = 0;
+	public boolean setpointDoneCounterReached()
+	{
+		if (hasHitRSetpoint() && hasHitLSetpoint())
+			currentDoneCount++;
+		else
+			currentDoneCount = 0;
+		if(currentDoneCount > DONE_COUNT_MAX)
+		{
+			currentDoneCount = 0;
+			return true;
+		}
+		return false;
+	}
 
 	public void controllerTank(double rVal, double lVal)
 	{

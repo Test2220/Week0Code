@@ -52,17 +52,20 @@ public class AutoMotion extends Command
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished()
 	{
+		/*
 		if (TankDrive.getInstance().hasHitRSetpoint() && TankDrive.getInstance().hasHitLSetpoint())
 			doneCounter++;
 		else
 			doneCounter = 0;
 		return doneCounter > 10;
+		*/
+		return TankDrive.getInstance().setpointDoneCounterReached();
 	}
 
 	// Called once after isFinished returns true
 	protected void end()
 	{
-		new DriveOff();
+		//Scheduler.getInstance().add(new DriveOff());
 	}
 
 	// Called when another command which requires one or more of the same

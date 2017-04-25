@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  * Always use timeout based on what amount of time you want spent on building
- * air pressure / waiting around
+ * air pressure / waiting around (max 5 seconds)
  */
 public class AutoInit extends CommandGroup
 {
@@ -12,7 +12,7 @@ public class AutoInit extends CommandGroup
 	public AutoInit()
 	{
 		addSequential(new ShiftDrivetrain(false));
-		addSequential(new ShiftClimber(true)); //figure out what is up for gear slot
-		addSequential(new Delay(1000));
+		addSequential(new ShiftClimber(true)); //TODO figure out what is up for gear slot
+		addSequential(new Delay(5)); //default to five seconds
 	}
 }

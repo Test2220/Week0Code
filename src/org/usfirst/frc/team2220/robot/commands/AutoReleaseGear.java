@@ -15,8 +15,8 @@ public class AutoReleaseGear extends CommandGroup
 
 	public AutoReleaseGear()
 	{
-		addSequential(new ShiftClimber(true)); // down TODO figure out if right
-		addSequential(new RunGearIntake(1.0), 2); //TODO figure out which way is reverse
-		addSequential(new RunGearIntake(0.0), 2);
+		addSequential(new ShiftClimber(true)); // TRUE IS DOWN
+		addSequential(new RunGearIntake(1.0), 1); //NEGATIVE IS REVERSE
+		addSequential(new RunGearIntake(0.0), 0.5);
 	}
 }

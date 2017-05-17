@@ -2,6 +2,7 @@ package org.usfirst.frc.team2220.robot.commands;
 
 import org.usfirst.frc.team2220.robot.subsystems.TankDrive;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -56,11 +57,6 @@ public class TeleMotion extends Command
 	protected void end()
 	{
 		new DriveOff();
-	}
-
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted()
-	{
+		//Scheduler.getInstance().add(new DriveOff());
 	}
 }

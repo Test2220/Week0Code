@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2220.robot.subsystems;
 
 import org.usfirst.frc.team2220.robot.RobotMap;
-import org.usfirst.frc.team2220.robot.commands.DeccelerateClimber;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
@@ -64,6 +63,6 @@ public class Climber extends Subsystem
 
 	public void initDefaultCommand()
 	{
-		setDefaultCommand(new DeccelerateClimber());
+		//setDefaultCommand(new DeccelerateClimber());
 	}
 }

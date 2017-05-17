@@ -19,9 +19,10 @@ public class AutoCenterGear extends CommandGroup
 	public AutoCenterGear()
 	{
 		addSequential(new AutoInit(), 3);
-		addSequential(new AutoMotion(RobotMap.inchesToEncRot(50), RobotMap.inchesToEncRot(50), driveAccel, driveSpeed), 5);
-		addSequential(new GearCameraLineUp(), 3);
-		addSequential(new AutoMotion(RobotMap.inchesToEncRot(17.5), RobotMap.inchesToEncRot(17.5), driveAccel, driveSpeed), 5);
-		addSequential(new AutoReleaseGear(), 4);
+		addSequential(new AutoMotion(RobotMap.inchesToEncRot(69.5), RobotMap.inchesToEncRot(69.5), driveAccel, driveSpeed), 4);
+		//addSequential(new GearCameraLineUp(), 3);
+		//+50
+		//addSequential(new AutoMotion(RobotMap.inchesToEncRot(17.5), RobotMap.inchesToEncRot(17.5), driveAccel, driveSpeed), 3);
+		addSequential(new AutoReleaseGear(), 2);
 	}
 }

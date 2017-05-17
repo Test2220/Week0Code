@@ -37,6 +37,6 @@ public class ClimberJoystick extends Command
     // Called once after isFinished returns true
     protected void end() 
     {
-    	//Climber.getInstance().run(0.0);
+    	Climber.getInstance().run(0.0);
     }
 }

@@ -54,15 +54,17 @@ public class RobotMap
 	public static void init()
 	{
 		CameraServer.getInstance().startAutomaticCapture();
+		CameraServer.getInstance().startAutomaticCapture();
 		compressor = new Compressor();
 
-		/* Competition
+		//Competition
 		driveShifter = new DoubleSolenoid(6, 7); 
 		collectorShifter = new DoubleSolenoid(0, 1); 
-		*/
 		
 		//Practice
+		/*
 		driveShifter = new DoubleSolenoid(0, 3);
 		collectorShifter = new DoubleSolenoid(6, 7);
+		*/
 	}
 }

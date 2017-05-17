@@ -84,12 +84,13 @@ public class Robot extends IterativeRobot
 	{
 		try
 		{
-			autoCommand = (Command) autoChooser.getSelected(); // chooser
+			//autoCommand = (Command) autoChooser.getSelected(); // chooser
+			autoCommand = new AutoRightGear();//AutoRedShoot();//AutoRightGear();//AutoBlueShoot();//AutoRightGear();
 			autoCommand.start();
 		}
 		catch (Exception e)
 		{
-		}
+}
 		// autoCommand = new AutoRightGear(); //manual
 		//
 	}

@@ -12,7 +12,7 @@ public class AutoInit extends CommandGroup
 	public AutoInit()
 	{
 		addSequential(new ShiftDrivetrain(false));
-		addSequential(new ShiftClimber(true)); //TODO figure out what is up for gear slot
+		addSequential(new ShiftClimber(false)); //FALSE IS UP
 		addSequential(new Delay(5)); //default to five seconds
 	}
 }
